@@ -43,7 +43,9 @@ void Event::GetData(std::vector<char>* output) const {
 
 Peer* Event::GetPeer() {
   CHECK(_event->type != ENET_EVENT_TYPE_NONE);
-  return new Peer(_event->peer);
+  Peer* peer = new Peer(_event->peer);
+  CHECK(peer != NULL);
+  return peer;
 }
 
 std::string Event::GetPeerIp() const {
@@ -69,6 +71,7 @@ void* Event::GetPeerData() const {
 
 Event::Event() : _is_packet_destroyed(true) {
   _event = new ENetEvent();
+  CHECK(_event != NULL);
 }
 
 void Event::_DestroyPacket() {
