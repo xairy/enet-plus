@@ -44,7 +44,7 @@ std::string Peer::GetIp() const {
 }
 
 uint16_t Peer::GetPort() const {
-  return _peer->address.port;
+  return _peer->address.port; // XXX: type cast.
 }
 
 void Peer::Disconnect() {

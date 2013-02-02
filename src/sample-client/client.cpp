@@ -21,13 +21,13 @@ int main() {
 
   rv = client->Service(event, timeout);
   CHECK(rv);
-  CHECK(event->GetType() == Event::EVENT_CONNECT);
+  CHECK(event->GetType() == Event::TYPE_CONNECT);
 
   printf("Connected to %s:%u.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
 
   rv = client->Service(event, timeout);
   CHECK(rv);
-  CHECK(event->GetType() == Event::EVENT_RECEIVE);
+  CHECK(event->GetType() == Event::TYPE_RECEIVE);
 
   std::vector<char> msg;
   event->GetData(&msg);
@@ -36,7 +36,7 @@ int main() {
   printf("Message received: %s\n", &msg[0]);
   
   char message[] = "Hello world!";
-  rv = peer->Send(message, sizeof(message));
+  rv = peer->Send(message, sizeof(message), true);
   CHECK(rv);
 
   client->Flush();
@@ -47,14 +47,14 @@ int main() {
 
   rv = client->Service(event, timeout);
   CHECK(rv);
-  CHECK(event->GetType() == Event::EVENT_DISCONNECT);
+  CHECK(event->GetType() == Event::TYPE_DISCONNECT);
 
   printf("Disconnected from %s:%u.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
 
   delete event;
   delete peer;
 
-  client->Destroy();
+  client->Finalize();
   delete client;
 
   return 0;

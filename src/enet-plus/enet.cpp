@@ -13,21 +13,28 @@
 
 namespace enet {
 
-Enet::Enet() : _state(STATE_CREATED) { }
+Enet::Enet() : _state(STATE_FINALIZED) { }
 
 Enet::~Enet() {
   if(_state == STATE_INITIALIZED) {
-    enet_deinitialize();
+    Finalize();
   }
 }
 
 bool Enet::Initialize() {
+  CHECK(_state == STATE_FINALIZED);
   if(enet_initialize() != 0) {
     THROW_ERROR("Unable to initialize enet!");
     return false;
   }
   _state = STATE_INITIALIZED;
   return true;
+}
+
+void Enet::Finalize() {
+  CHECK(_state == STATE_INITIALIZED);
+  enet_deinitialize();
+  _state = STATE_FINALIZED;
 }
 
 ServerHost* Enet::CreateServerHost(

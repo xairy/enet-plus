@@ -14,6 +14,7 @@ class Enet;
 class Event;
 
 // A server host for communicating with client hosts.
+// You can create a 'ServerHost' by using 'Enet::CreateServerHost'.
 class ServerHost {
   friend class Enet;
 
@@ -23,7 +24,12 @@ public:
   // Broadcast data from 'data' with length of 'length' to all Peer's on 
   // selected channel, associated with 'channel_id'.
   // Returns 'true' on success, returns 'false' on error.
-  ENET_PLUS_DECL bool Broadcast(const char* data, size_t length, bool reliable = true, uint8_t channel_id = 0);
+  ENET_PLUS_DECL bool Broadcast(
+    const char* data,
+    size_t length,
+    bool reliable = true,
+    uint8_t channel_id = 0
+  );
 
   // Checks for events with a timeout. Should be called to send all queued
   // with 'Peer::Send()' packets. 'event' is an 'Event' class where event
@@ -41,14 +47,13 @@ public:
   ENET_PLUS_DECL void Flush();
 
   // Cleans up. Automatically called in the destructor.
-  ENET_PLUS_DECL void Destroy();
+  ENET_PLUS_DECL void Finalize();
 
 private:
   DISALLOW_COPY_AND_ASSIGN(ServerHost);
 
   // Creates an uninitialized 'ServerHost'. This is an internal constructor
-  // used by 'ServerHost::Create'. Don't use it yourself.
-  // You can create a 'ServerHost' by using 'Enet::CreateServerHost'.
+  // used by 'ServerHost::Create'.
   ServerHost();
 
   // Creates 'ServerHost' on port 'port'.
@@ -66,9 +71,8 @@ private:
   );
 
   enum {
-    STATE_CREATED, 
     STATE_INITIALIZED,
-    STATE_DESTROYED
+    STATE_FINALIZED
   } _state;
 
   _ENetHost* _server;

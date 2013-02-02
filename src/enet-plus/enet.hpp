@@ -13,18 +13,19 @@
 
 namespace enet {
 
-// TODO: write comments.
+// You need to create and 'Initialize()' a 'Enet' instance to work with ENet.
 class Enet {
 public:
-  // TODO: write comments.
   ENET_PLUS_DECL Enet();
-
-  // TODO: write comments.
   ENET_PLUS_DECL ~Enet();
 
   // Initializes ENet.
   // Returns 'true' on success, returns 'false' on error.
   ENET_PLUS_DECL bool Initialize();
+
+  // Finalizes ENet.
+  // Automatically called in the destructor.
+  ENET_PLUS_DECL void Finalize();
 
   // Creates 'ServerHost' bound to 'port'.
   // You may specify 'channel_count' - number of channels to be used.
@@ -52,7 +53,7 @@ public:
     uint32_t outgoing_bandwith = 0
   );
 
-  // Creates non-initialized Event.
+  // Creates an empty Event.
   // Returned 'Event' should be deallocated manually using 'delete'.
   ENET_PLUS_DECL Event* CreateEvent();
 
@@ -60,7 +61,7 @@ private:
   DISALLOW_COPY_AND_ASSIGN(Enet);
 
   enum {
-    STATE_CREATED,
+    STATE_FINALIZED,
     STATE_INITIALIZED,
   } _state;
 };

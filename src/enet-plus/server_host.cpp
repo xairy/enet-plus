@@ -8,36 +8,9 @@
 
 namespace enet {
 
-ServerHost* ServerHost::Create(
-  uint16_t port,
-  size_t peer_count,
-  size_t channel_count,
-  uint32_t incoming_bandwidth,
-  uint32_t outgoing_bandwidth
-) {
-  ServerHost* server = new ServerHost();
-  CHECK(server != NULL);
-
-  ENetAddress address;
-  address.host = ENET_HOST_ANY;
-  address.port = port;
-
-  server->_server = enet_host_create(&address, peer_count, channel_count,
-    incoming_bandwidth, outgoing_bandwidth);
-  if(server->_server == NULL) {
-    THROW_ERROR("Unable to create enet host!");
-    server->_state = STATE_DESTROYED;
-    delete server;
-    return NULL;
-  }
-
-  server->_state = STATE_INITIALIZED;
-  return server;
-}
-
 ServerHost::~ServerHost() {
   if(_state == STATE_INITIALIZED) {
-    Destroy();
+    Finalize();
   }
 };
 
@@ -74,7 +47,8 @@ bool ServerHost::Service(Event* event, uint32_t timeout) {
     event->_DestroyPacket();
   }
 
-  int rv = enet_host_service(_server, (event == NULL) ? NULL : event->_event, timeout);
+  int rv = enet_host_service(_server,
+    (event == NULL) ? NULL : event->_event, timeout);
 
   if(rv < 0) {
     THROW_ERROR("Unable to service enet host!");
@@ -92,12 +66,38 @@ void ServerHost::Flush() {
   enet_host_flush(_server);
 }
 
-void ServerHost::Destroy() {
+void ServerHost::Finalize() {
   CHECK(_state == STATE_INITIALIZED);
   enet_host_destroy(_server);
-  _state = STATE_DESTROYED;
+  _state = STATE_FINALIZED;
 };
 
-ServerHost::ServerHost() : _state(STATE_CREATED), _server(NULL) { }
+ServerHost::ServerHost() : _state(STATE_FINALIZED), _server(NULL) { }
+
+ServerHost* ServerHost::Create(
+  uint16_t port,
+  size_t peer_count,
+  size_t channel_count,
+  uint32_t incoming_bandwidth,
+  uint32_t outgoing_bandwidth
+) {
+  ServerHost* server = new ServerHost();
+  CHECK(server != NULL);
+
+  ENetAddress address;
+  address.host = ENET_HOST_ANY;
+  address.port = port; // XXX: type cast.
+
+  server->_server = enet_host_create(&address, peer_count, channel_count,
+    incoming_bandwidth, outgoing_bandwidth);
+  if(server->_server == NULL) {
+    THROW_ERROR("Unable to create enet host!");
+    delete server;
+    return NULL;
+  }
+
+  server->_state = STATE_INITIALIZED;
+  return server;
+}
 
 } // namespace enet

@@ -11,29 +11,9 @@
 
 namespace enet {
 
-ClientHost* ClientHost::Create (
-  size_t channel_count,
-  uint32_t incoming_bandwidth,
-  uint32_t outgoing_bandwidth
-) {
-  ClientHost* client = new ClientHost();
-  CHECK(client != NULL);
-
-  client->_client = enet_host_create(NULL, 1, channel_count, incoming_bandwidth, outgoing_bandwidth);
-  if(client->_client == NULL) {
-    THROW_ERROR("Unable to create enet host!");
-    client->_state = STATE_DESTROYED;
-    delete client;
-    return NULL;
-  }
-
-  client->_state = STATE_INITIALIZED;
-  return client;
-}
-
 ClientHost::~ClientHost() {
   if(_state == STATE_INITIALIZED) {
-    Destroy();
+    Finalize();
   }
 }
 
@@ -44,7 +24,8 @@ bool ClientHost::Service(Event* event, uint32_t timeout) {
     event->_DestroyPacket();
   }
 
-  int rv = enet_host_service(_client, (event == NULL) ? NULL : event->_event, timeout);
+  int rv = enet_host_service(_client,
+    (event == NULL) ? NULL : event->_event, timeout);
 
   if(rv < 0) {
     THROW_ERROR("Unable to service enet host!");
@@ -69,7 +50,7 @@ Peer* ClientHost::Connect(
     THROW_ERROR("Unable to set enet host address!");
     return NULL;
   }
-  address.port = port;
+  address.port = port; // XXX: type cast.
 
   ENetPeer* enet_peer = enet_host_connect(_client, &address, channel_count, 0);
   if(enet_peer == NULL) {
@@ -78,9 +59,7 @@ Peer* ClientHost::Connect(
   }
 
   Peer* peer = new Peer(enet_peer);
-  if(peer == NULL) {
-    return NULL;
-  }
+  CHECK(peer != NULL);
 
   return peer;
 }
@@ -90,12 +69,32 @@ void ClientHost::Flush() {
   enet_host_flush(_client);
 }
 
-void ClientHost::Destroy() {
+void ClientHost::Finalize() {
   CHECK(_state == STATE_INITIALIZED);
   enet_host_destroy(_client);
-  _state = STATE_DESTROYED;
+  _state = STATE_FINALIZED;
 };
 
-ClientHost::ClientHost() : _state(STATE_CREATED), _client(NULL) { };
+ClientHost::ClientHost() : _state(STATE_FINALIZED), _client(NULL) { };
+
+ClientHost* ClientHost::Create(
+  size_t channel_count,
+  uint32_t incoming_bandwidth,
+  uint32_t outgoing_bandwidth
+) {
+  ClientHost* client = new ClientHost();
+  CHECK(client != NULL);
+
+  client->_client = enet_host_create(NULL, 1, channel_count,
+    incoming_bandwidth, outgoing_bandwidth);
+  if(client->_client == NULL) {
+    THROW_ERROR("Unable to create enet host!");
+    delete client;
+    return NULL;
+  }
+
+  client->_state = STATE_INITIALIZED;
+  return client;
+}
 
 } // namespace enet

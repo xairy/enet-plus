@@ -12,21 +12,21 @@
 namespace enet {
 
 Event::~Event() {
-  DestroyPacket();
+  _DestroyPacket();
   delete _event;
 }
 
 Event::EventType Event::GetType() const {
   if(_event->type == ENET_EVENT_TYPE_CONNECT) {
-    return Event::EVENT_CONNECT;
+    return Event::TYPE_CONNECT;
   }
   if(_event->type == ENET_EVENT_TYPE_DISCONNECT) {
-    return Event::EVENT_DISCONNECT;
+    return Event::TYPE_DISCONNECT;
   }
   if(_event->type == ENET_EVENT_TYPE_RECEIVE) {
-    return Event::EVENT_RECEIVE;
+    return Event::TYPE_RECEIVE;
   }
-  return Event::EVENT_NONE;
+  return Event::TYPE_NONE;
 }
 
 uint8_t Event::GetChannelId() const {
@@ -59,7 +59,7 @@ std::string Event::GetPeerIp() const {
 
 uint16_t Event::GetPeerPort() const {
   CHECK(_event->type != ENET_EVENT_TYPE_NONE);
-  return _event->peer->address.port;
+  return _event->peer->address.port; // XXX: type cast.
 }
 
 void* Event::GetPeerData() const {
@@ -76,10 +76,6 @@ void Event::_DestroyPacket() {
     enet_packet_destroy(_event->packet);
     _is_packet_destroyed = true;
   }
-}
-
-void Event::DestroyPacket() const {
-
 }
 
 } // namespace enet

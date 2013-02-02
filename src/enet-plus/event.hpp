@@ -20,27 +20,27 @@ class Peer;
 
 // 'Event' class represents an event that can be delivered by
 // 'ClientHost::Service' and 'ServerHost::Service' methods.
+// You can create an empty 'Event' by using 'Enet::CreateEvent'.
 class Event {
   friend class ClientHost;
   friend class ServerHost;
   friend class Enet;
 
 public:
-  // TODO: use 'TYPE_' prefix instead of 'EVENT_'.
   enum EventType {
     // No event occurred within the specified time limit.
-    EVENT_NONE,
+    TYPE_NONE,
 
     // A connection request initiated by 'ClientHost::Connect()' has completed.
     // You can use 'GetPeer()', 'GetPeerIp()', 'GetPeerPort()' methods to get
     // information about connected peer.
-    EVENT_CONNECT,
+    TYPE_CONNECT,
 
     // A peer has disconnected. This event is generated on a successful
     // completion of a disconnect initiated by 'Peer::Disconnect()'.
     // You can use 'GetPeer()', 'GetPeerIp()', 'GetPeerPort()' methods to get
     // information about disconnected peer.
-    EVENT_DISCONNECT,  
+    TYPE_DISCONNECT,  
 
     // A packet has been received from a peer.
     // You can use 'GetPeer()', 'GetPeerIp()', 'GetPeerPort()' methods to get
@@ -48,7 +48,7 @@ public:
     // 'GetChannelId()' returns the channel number upon which the packet was
     // received. 'GetData()' returns the data from received packet.
     // This packet must be destroyed with 'DestroyPacket()' after use.
-    EVENT_RECEIVE
+    TYPE_RECEIVE
   };
 
   ENET_PLUS_DECL ~Event();
@@ -70,6 +70,7 @@ public:
   // deallocated manually using 'delete'.
   // WARNING: This method allocates new 'Peer' even if a 'Peer' associated
   // with a remote peer already exists.
+  // XXX: fix it?
   ENET_PLUS_DECL Peer* GetPeer();
 
   // Use this instead of 'GetPeer()' if you need to call only 'Peer's getters.
@@ -77,9 +78,6 @@ public:
   ENET_PLUS_DECL std::string GetPeerIp() const;
   ENET_PLUS_DECL uint16_t GetPeerPort() const;
   ENET_PLUS_DECL void* GetPeerData() const;
-
-  // Left here for backward compatibility.
-  ENET_PLUS_DECL void DestroyPacket() const;
 
 private:
   DISALLOW_COPY_AND_ASSIGN(Event);

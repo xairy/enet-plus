@@ -25,7 +25,7 @@ int main() {
     CHECK(rv);
 
     switch(event->GetType()) {
-      case Event::EVENT_CONNECT: {
+      case Event::TYPE_CONNECT: {
         printf("Client %s:%u connected.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
 
         Peer* peer = event->GetPeer();
@@ -38,15 +38,14 @@ int main() {
         break;
       }
 
-      case Event::EVENT_RECEIVE: {
+      case Event::TYPE_RECEIVE: {
         event->GetData(&data);
         data.push_back(0);
         printf("From %s:%u: %s\n", event->GetPeerIp().c_str(), event->GetPeerPort(), &data[0]);
-        event->DestroyPacket();
         break;
       }
 
-      case Event::EVENT_DISCONNECT: {
+      case Event::TYPE_DISCONNECT: {
         printf("Client %s:%u disconnected.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
         break;
       }
@@ -57,7 +56,7 @@ int main() {
 
   delete event;
 
-  server->Destroy();
+  server->Finalize();
   delete server;
 
   return EXIT_SUCCESS;

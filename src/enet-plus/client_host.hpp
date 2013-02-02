@@ -17,6 +17,7 @@ class Event;
 class Peer;
 
 // A client host for communicating with a server host.
+// You can create a 'ClientHost' by using 'Enet::CreateClientHost'.
 class ClientHost {
   friend class Enet;
 
@@ -39,21 +40,24 @@ public:
   // 'channel_count' is the number of channels to be used.
   // Returns 'Peer' on success, returns 'NULL' on error.
   // Returned 'Peer' should be deallocated manually using 'delete'.
-  ENET_PLUS_DECL Peer* Connect(std::string server_ip, uint16_t port, size_t channel_count = 1);
+  ENET_PLUS_DECL Peer* Connect(
+    std::string server_ip,
+    uint16_t port,
+    size_t channel_count = 1
+  );
 
   // This function is needed only be used in circumstances where one wishes to
   // send queued packets earlier than in a call to 'ServerHost::Service()'.
   ENET_PLUS_DECL void Flush();
 
   // Cleans up. Automatically called in the destructor.
-  ENET_PLUS_DECL void Destroy();
+  ENET_PLUS_DECL void Finalize();
 
 private:
   DISALLOW_COPY_AND_ASSIGN(ClientHost);
 
   // Creates an uninitialized 'ClientHost'. This is an internal constructor
-  // used by 'ClientHost::Create'. Don't use it yourself.
-  // You can create a 'ClientHost' by using 'Enet::CreateClientHost'.
+  // used by 'ClientHost::Create'.
   ClientHost();
 
   // Creates 'ClientHost'.
@@ -69,9 +73,8 @@ private:
   );
 
   enum {
-    STATE_CREATED, 
+    STATE_FINALIZED, 
     STATE_INITIALIZED,
-    STATE_DESTROYED
   } _state;
 
   _ENetHost* _client;
