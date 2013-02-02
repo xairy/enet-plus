@@ -25,7 +25,7 @@ ServerHost* ServerHost::Create(
   server->_server = enet_host_create(&address, peer_count, channel_count,
     incoming_bandwidth, outgoing_bandwidth);
   if(server->_server == NULL) {
-    BM_ERROR("Unable to create enet host!");
+    THROW_ERROR("Unable to create enet host!");
     server->_state = STATE_DESTROYED;
     delete server;
     return NULL;
@@ -58,7 +58,7 @@ bool ServerHost::Broadcast(
 
   ENetPacket* packet = enet_packet_create(data, length, flags);
   if(packet == NULL) {
-    BM_ERROR("Unable to create enet packet!");
+    THROW_ERROR("Unable to create enet packet!");
     return false;
   }
 
@@ -77,7 +77,7 @@ bool ServerHost::Service(Event* event, uint32_t timeout) {
   int rv = enet_host_service(_server, (event == NULL) ? NULL : event->_event, timeout);
 
   if(rv < 0) {
-    BM_ERROR("Unable to service enet host!");
+    THROW_ERROR("Unable to service enet host!");
     return false;
   }
   if(rv > 0) {

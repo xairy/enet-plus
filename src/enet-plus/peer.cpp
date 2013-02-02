@@ -22,12 +22,12 @@ bool Peer::Send(
   }
   ENetPacket* packet = enet_packet_create(data, length, flags);
   if(packet == NULL) {
-    BM_ERROR("Unable to create enet packet!");
+    THROW_ERROR("Unable to create enet packet!");
     return false;
   }
   if(enet_peer_send(_peer, channel_id, packet) != 0) {
     enet_packet_destroy(packet);
-    BM_ERROR("Unable to send enet packet!");
+    THROW_ERROR("Unable to send enet packet!");
     return false;
   }
   return true;
@@ -37,7 +37,7 @@ std::string Peer::GetIp() const {
   const size_t buffer_size = 32;
   char buffer[buffer_size];
   if(enet_address_get_host_ip(&_peer->address, buffer, buffer_size) != 0) {
-    BM_ERROR("Unable to get enet host ip!");
+    THROW_ERROR("Unable to get enet host ip!");
     buffer[0] = 0;
   }
   return std::string(buffer);

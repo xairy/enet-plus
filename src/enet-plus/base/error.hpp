@@ -13,18 +13,20 @@
 
 #include <enet-plus/base/macros.hpp>
 
+#include <enet-plus/dll.hpp>
+
 namespace bm {
 
 class Error {
 public:
-  static void Print() {
+  ENET_PLUS_DECL static void Print() {
     std::vector<std::string>::const_iterator itr;
     for(itr = messages.begin(); itr != messages.end(); ++itr) {
       fprintf(stderr, "%s\n", itr->c_str());
     }
   }
 
-  static void Throw(const char* file, unsigned int line, const char* fmt, ...) {
+  ENET_PLUS_DECL static void Throw(const char* file, unsigned int line, const char* fmt, ...) {
     static char buf[1024];
     
     va_list args;
@@ -42,11 +44,11 @@ public:
 private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(Error);
 
-  static std::vector<std::string> messages;
+  ENET_PLUS_DECL static std::vector<std::string> messages;
 };
 
 // TODO: VA_ARGS?
-#define BM_ERROR(msg) bm::Error::Throw(__FILE__, __LINE__, "%s", msg)
+#define THROW_ERROR(msg) bm::Error::Throw(__FILE__, __LINE__, "%s", msg)
 
 } // namespace bm
 

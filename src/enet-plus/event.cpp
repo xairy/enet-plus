@@ -51,7 +51,7 @@ std::string Event::GetPeerIp() const {
   const size_t size = 32;
   char buffer[size];
   if(enet_address_get_host_ip(&_event->peer->address, buffer, size) != 0) {
-    BM_ERROR("Unable to get enet host ip!");
+    THROW_ERROR("Unable to get enet host ip!");
     buffer[0] = 0;
   }
   return std::string(buffer);

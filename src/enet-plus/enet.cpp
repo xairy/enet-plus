@@ -23,7 +23,7 @@ Enet::~Enet() {
 
 bool Enet::Initialize() {
   if(enet_initialize() != 0) {
-    BM_ERROR("Unable to initialize enet!");
+    THROW_ERROR("Unable to initialize enet!");
     return false;
   }
   _state = STATE_INITIALIZED;
