@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include <base/macros.hpp>
-#include <base/pstdint.hpp>
+#include <enet-plus/base/macros.hpp>
+#include <enet-plus/base/pstdint.hpp>
 
 #include <enet-plus/dll.hpp>
 

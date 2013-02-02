@@ -2,8 +2,8 @@
 
 #include <enet/enet.h>
 
-#include <base/error.hpp>
-#include <base/pstdint.hpp>
+#include <enet-plus/base/error.hpp>
+#include <enet-plus/base/pstdint.hpp>
 
 #include <enet-plus/event.hpp>
 #include <enet-plus/peer.hpp>

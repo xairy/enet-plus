@@ -37,8 +37,6 @@ solution "enet-plus"
     includedirs { "src" }
     files { "src/enet-plus/**.cpp",
             "src/enet-plus/**.hpp" }
-    files { "src/base/**.cpp",
-            "src/base/**.hpp" }
      
     configuration "linux"
       links { "enet" }
