@@ -1,7 +1,7 @@
 #ifndef ENET_PLUS_BASE_PSTDINT_HPP_
 #define ENET_PLUS_BASE_PSTDINT_HPP_
 
-#include <base/macros.hpp>
+#include <enet-plus/base/macros.hpp>
 
 #define __STDC_LIMIT_MACROS
 #include <stdint.h>
