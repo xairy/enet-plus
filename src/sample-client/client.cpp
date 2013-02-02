@@ -17,7 +17,7 @@ int main() {
  
   Event* event = enet.CreateEvent();
 
-  uint32_t timeout = 5000;
+  uint32_t timeout = 100;
 
   rv = client->Service(event, timeout);
   CHECK(rv);
@@ -39,7 +39,8 @@ int main() {
   rv = peer->Send(message, sizeof(message), true);
   CHECK(rv);
 
-  client->Flush();
+  rv = client->Service(event, timeout);
+  CHECK(rv);
 
   printf("Message sent: %s\n", message);
 

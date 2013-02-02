@@ -51,6 +51,14 @@ void Peer::Disconnect() {
   enet_peer_disconnect(_peer, 0);
 }
 
+void Peer::DisconnectNow() {
+  enet_peer_disconnect_now(_peer, 0);
+}
+
+void Peer::DisconnectLater() {
+  enet_peer_disconnect_later(_peer, 0);
+}
+
 void Peer::Reset() {
   enet_peer_reset(_peer);
 }
