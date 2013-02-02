@@ -47,8 +47,7 @@ private:
   ENET_PLUS_DECL static std::vector<std::string> messages;
 };
 
-// TODO: VA_ARGS?
-#define THROW_ERROR(msg) enet::Error::Throw(__FILE__, __LINE__, "%s", msg)
+#define THROW_ERROR(msg, ...) enet::Error::Throw(__FILE__, __LINE__, msg, ##__VA_ARGS__)
 
 } // namespace enet
 
