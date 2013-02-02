@@ -11,7 +11,7 @@
 
 #include <enet-plus/dll.hpp>
 
-namespace bm {
+namespace enet {
 
 // TODO: write comments.
 class Enet {
@@ -65,6 +65,6 @@ private:
   } _state;
 };
 
-} // namespace bm
+} // namespace enet
 
 #endif // ENET_PLUS_ENET_HPP_

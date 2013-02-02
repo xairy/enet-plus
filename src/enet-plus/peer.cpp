@@ -8,7 +8,7 @@
 
 #include <enet-plus/peer.hpp>
 
-namespace bm {
+namespace enet {
 
 bool Peer::Send(
   const char* data,
@@ -67,4 +67,4 @@ Peer::Peer(ENetPeer* peer) : _peer(peer) {
   CHECK(peer != NULL);
 }
 
-} // namespace bm
+} // namespace enet

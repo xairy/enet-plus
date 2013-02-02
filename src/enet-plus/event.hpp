@@ -11,7 +11,7 @@
 
 struct _ENetEvent;
 
-namespace bm {
+namespace enet {
 
 class Enet;
 class ClientHost;
@@ -99,6 +99,6 @@ private:
   bool _is_packet_destroyed;
 };
 
-} // namespace bm
+} // namespace enet
 
 #endif // ENET_PLUS_EVENT_HPP_

@@ -10,7 +10,7 @@
 
 struct _ENetPeer;
 
-namespace bm {
+namespace enet {
 
 class Enet;
 class ClientHost;
@@ -68,6 +68,6 @@ private:
   _ENetPeer* _peer;
 };
 
-} // namespace bm
+} // namespace enet
 
 #endif // ENET_PLUS_PEER_HPP_

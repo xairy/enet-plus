@@ -15,7 +15,7 @@
 
 #include <enet-plus/dll.hpp>
 
-namespace bm {
+namespace enet {
 
 class Error {
 public:
@@ -48,8 +48,8 @@ private:
 };
 
 // TODO: VA_ARGS?
-#define THROW_ERROR(msg) bm::Error::Throw(__FILE__, __LINE__, "%s", msg)
+#define THROW_ERROR(msg) enet::Error::Throw(__FILE__, __LINE__, "%s", msg)
 
-} // namespace bm
+} // namespace enet
 
 #endif // ENET_PLUS_BASE_ERROR_HPP_

@@ -9,7 +9,7 @@
 #include <enet-plus/peer.hpp>
 #include <enet-plus/client_host.hpp>
 
-namespace bm {
+namespace enet {
 
 ClientHost* ClientHost::Create (
   size_t channel_count,
@@ -98,4 +98,4 @@ void ClientHost::Destroy() {
 
 ClientHost::ClientHost() : _state(STATE_CREATED), _client(NULL) { };
 
-} // namespace bm
+} // namespace enet

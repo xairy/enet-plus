@@ -9,7 +9,7 @@
 #include <enet-plus/event.hpp>
 #include <enet-plus/peer.hpp>
 
-namespace bm {
+namespace enet {
 
 Event::~Event() {
   DestroyPacket();
@@ -82,4 +82,4 @@ void Event::DestroyPacket() const {
 
 }
 
-} // namespace bm
+} // namespace enet

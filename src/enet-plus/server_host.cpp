@@ -6,7 +6,7 @@
 #include <enet-plus/server_host.hpp>
 #include <enet-plus/event.hpp>
 
-namespace bm {
+namespace enet {
 
 ServerHost* ServerHost::Create(
   uint16_t port,
@@ -100,4 +100,4 @@ void ServerHost::Destroy() {
 
 ServerHost::ServerHost() : _state(STATE_CREATED), _server(NULL) { }
 
-} // namespace bm
+} // namespace enet

@@ -11,7 +11,7 @@
 #include <enet-plus/client_host.hpp>
 #include <enet-plus/event.hpp>
 
-namespace bm {
+namespace enet {
 
 Enet::Enet() : _state(STATE_CREATED) { }
 
@@ -60,4 +60,4 @@ Event* Enet::CreateEvent() {
   return event;
 }
 
-} // namespace bm
+} // namespace enet

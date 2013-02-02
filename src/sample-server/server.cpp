@@ -2,7 +2,7 @@
 
 #include <enet-plus/enet.hpp>
 
-using namespace bm;
+using namespace enet;
 
 int main() {
   Enet enet;

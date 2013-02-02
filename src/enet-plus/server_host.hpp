@@ -8,7 +8,7 @@
 
 struct _ENetHost;
 
-namespace bm {
+namespace enet {
 
 class Enet;
 class Event;
@@ -74,6 +74,6 @@ private:
   _ENetHost* _server;
 };
 
-} // namespace bm
+} // namespace enet
 
 #endif // ENET_PLUS_SERVER_HOST_HPP_
