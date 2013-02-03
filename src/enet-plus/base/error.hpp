@@ -26,7 +26,7 @@ public:
     }
   }
 
-  ENET_PLUS_DECL static void Throw(const char* file, unsigned int line, const char* fmt, ...) {
+  static void Throw(const char* file, unsigned int line, const char* fmt, ...) {
     static char buf[1024];
     
     va_list args;
@@ -44,7 +44,7 @@ public:
 private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(Error);
 
-  ENET_PLUS_DECL static std::vector<std::string> messages;
+  static std::vector<std::string> messages;
 };
 
 #define THROW_ERROR(msg, ...) enet::Error::Throw(__FILE__, __LINE__, msg, ##__VA_ARGS__)
