@@ -4,6 +4,7 @@
 #include <enet-plus/base/macros.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
+#include <enet-plus/host.hpp>
 #include <enet-plus/server_host.hpp>
 #include <enet-plus/client_host.hpp>
 #include <enet-plus/event.hpp>

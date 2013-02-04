@@ -36,6 +36,12 @@ bool ServerHost::Initialize(
   return true;
 }
 
+void ServerHost::Finalize() {
+  CHECK(_state == STATE_INITIALIZED);
+  enet_host_destroy(_server);
+  _state = STATE_FINALIZED;
+};
+
 bool ServerHost::Service(Event* event, uint32_t timeout) {
   CHECK(_state == STATE_INITIALIZED);
 
@@ -62,12 +68,6 @@ void ServerHost::Flush() {
   enet_host_flush(_server);
 }
 
-void ServerHost::Finalize() {
-  CHECK(_state == STATE_INITIALIZED);
-  enet_host_destroy(_server);
-  _state = STATE_FINALIZED;
-};
-
 bool ServerHost::Broadcast(
   const char* data,
   size_t length,
@@ -93,6 +93,7 @@ bool ServerHost::Broadcast(
 
   return true;
 }
+
 ServerHost::ServerHost() : _state(STATE_FINALIZED), _server(NULL) { }
 
 } // namespace enet

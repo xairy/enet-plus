@@ -29,11 +29,14 @@ public:
   // You may specify incoming and outgoing bandwidth of the server in bytes
   // per second. Specifying '0' for these two options will cause ENet to rely
   // entirely upon its dynamic throttling algorithm to manage bandwidth.
-  bool Initialize(
+  ENET_PLUS_DECL bool Initialize(
     size_t channel_count = 1,
     uint32_t incoming_bandwidth = 0,
     uint32_t outgoing_bandwidth = 0
   );
+
+  // Cleans up. Automatically called in the destructor.
+  ENET_PLUS_DECL void Finalize();
 
   // Checks for events with a timeout. Should be called to send all queued
   // with 'Peer::Send()' packets. 'event' is an 'Event' class where event
@@ -49,9 +52,6 @@ public:
   // This function is needed only be used in circumstances where one wishes to
   // send queued packets earlier than in a call to 'ServerHost::Service()'.
   ENET_PLUS_DECL void Flush();
-
-  // Cleans up. Automatically called in the destructor.
-  ENET_PLUS_DECL void Finalize();
 
   // Initiates connection procedure to another host. To complete connection,
   // an event 'EVENT_CONNECT' should be dispatched using 'Service()'.

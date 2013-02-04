@@ -33,6 +33,12 @@ bool ClientHost::Initialize(
   return true;
 }
 
+void ClientHost::Finalize() {
+  CHECK(_state == STATE_INITIALIZED);
+  enet_host_destroy(_client);
+  _state = STATE_FINALIZED;
+};
+
 bool ClientHost::Service(Event* event, uint32_t timeout) {
   CHECK(_state == STATE_INITIALIZED);
 
@@ -58,12 +64,6 @@ void ClientHost::Flush() {
   CHECK(_state == STATE_INITIALIZED);
   enet_host_flush(_client);
 }
-
-void ClientHost::Finalize() {
-  CHECK(_state == STATE_INITIALIZED);
-  enet_host_destroy(_client);
-  _state = STATE_FINALIZED;
-};
 
 Peer* ClientHost::Connect(
   std::string server_ip,
