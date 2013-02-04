@@ -17,6 +17,22 @@ ClientHost::~ClientHost() {
   }
 }
 
+bool ClientHost::Initialize(
+  size_t channel_count,
+  uint32_t incoming_bandwidth,
+  uint32_t outgoing_bandwidth
+) {
+  _client = enet_host_create(NULL, 1, channel_count,
+    incoming_bandwidth, outgoing_bandwidth);
+  if(_client == NULL) {
+    THROW_ERROR("Unable to create enet host!");
+    return false;
+  }
+
+  _state = STATE_INITIALIZED;
+  return true;
+}
+
 bool ClientHost::Service(Event* event, uint32_t timeout) {
   CHECK(_state == STATE_INITIALIZED);
 
@@ -37,6 +53,17 @@ bool ClientHost::Service(Event* event, uint32_t timeout) {
 
   return true;
 }
+
+void ClientHost::Flush() {
+  CHECK(_state == STATE_INITIALIZED);
+  enet_host_flush(_client);
+}
+
+void ClientHost::Finalize() {
+  CHECK(_state == STATE_INITIALIZED);
+  enet_host_destroy(_client);
+  _state = STATE_FINALIZED;
+};
 
 Peer* ClientHost::Connect(
   std::string server_ip,
@@ -64,37 +91,6 @@ Peer* ClientHost::Connect(
   return peer;
 }
 
-void ClientHost::Flush() {
-  CHECK(_state == STATE_INITIALIZED);
-  enet_host_flush(_client);
-}
-
-void ClientHost::Finalize() {
-  CHECK(_state == STATE_INITIALIZED);
-  enet_host_destroy(_client);
-  _state = STATE_FINALIZED;
-};
-
 ClientHost::ClientHost() : _state(STATE_FINALIZED), _client(NULL) { };
-
-ClientHost* ClientHost::Create(
-  size_t channel_count,
-  uint32_t incoming_bandwidth,
-  uint32_t outgoing_bandwidth
-) {
-  ClientHost* client = new ClientHost();
-  CHECK(client != NULL);
-
-  client->_client = enet_host_create(NULL, 1, channel_count,
-    incoming_bandwidth, outgoing_bandwidth);
-  if(client->_client == NULL) {
-    THROW_ERROR("Unable to create enet host!");
-    delete client;
-    return NULL;
-  }
-
-  client->_state = STATE_INITIALIZED;
-  return client;
-}
 
 } // namespace enet

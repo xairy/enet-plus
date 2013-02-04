@@ -24,6 +24,17 @@ class ClientHost {
 public:
   ENET_PLUS_DECL ~ClientHost();
 
+  // Initializes 'ClientHost'.
+  // You may specify 'channel_count' - number of channels to be used.
+  // You may specify incoming and outgoing bandwidth of the server in bytes
+  // per second. Specifying '0' for these two options will cause ENet to rely
+  // entirely upon its dynamic throttling algorithm to manage bandwidth.
+  bool Initialize(
+    size_t channel_count = 1,
+    uint32_t incoming_bandwidth = 0,
+    uint32_t outgoing_bandwidth = 0
+  );
+
   // Checks for events with a timeout. Should be called to send all queued
   // with 'Peer::Send()' packets. 'event' is an 'Event' class where event
   // details will be placed if one occurs.
@@ -34,6 +45,13 @@ public:
   // occured within the specified time limit.
   // Returns 'true' on success, returns 'false' on error.
   ENET_PLUS_DECL bool Service(Event* event, uint32_t timeout);
+
+  // This function is needed only be used in circumstances where one wishes to
+  // send queued packets earlier than in a call to 'ServerHost::Service()'.
+  ENET_PLUS_DECL void Flush();
+
+  // Cleans up. Automatically called in the destructor.
+  ENET_PLUS_DECL void Finalize();
 
   // Initiates connection procedure to another host. To complete connection,
   // an event 'EVENT_CONNECT' should be dispatched using 'Service()'.
@@ -46,31 +64,11 @@ public:
     size_t channel_count = 1
   );
 
-  // This function is needed only be used in circumstances where one wishes to
-  // send queued packets earlier than in a call to 'ServerHost::Service()'.
-  ENET_PLUS_DECL void Flush();
-
-  // Cleans up. Automatically called in the destructor.
-  ENET_PLUS_DECL void Finalize();
-
 private:
   DISALLOW_COPY_AND_ASSIGN(ClientHost);
 
-  // Creates an uninitialized 'ClientHost'. This is an internal constructor
-  // used by 'ClientHost::Create'.
+  // Creates an uninitialized 'ClientHost'.
   ClientHost();
-
-  // Creates 'ClientHost'.
-  // You may specify 'channel_count' - number of channels to be used.
-  // You may specify incoming and outgoing bandwidth of the server in bytes
-  // per second. Specifying '0' for these two options will cause ENet to rely
-  // entirely upon its dynamic throttling algorithm to manage bandwidth.
-  // Returned 'ClientHost' should be deallocated manually using 'delete'.
-  static ClientHost* Create(
-    size_t channel_count = 1,
-    uint32_t incoming_bandwidth = 0,
-    uint32_t outgoing_bandwidth = 0
-  );
 
   enum {
     STATE_FINALIZED, 

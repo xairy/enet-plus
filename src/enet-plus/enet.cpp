@@ -45,9 +45,11 @@ ServerHost* Enet::CreateServerHost(
   uint32_t outgoing_bandwith
 ) {
   CHECK(_state == STATE_INITIALIZED);
-  ServerHost* server = ServerHost::Create(port, peer_count, channel_count,
-    incoming_bandwith, outgoing_bandwith);
-  return server;
+  ServerHost* server = new ServerHost();
+  CHECK(server != NULL);
+  bool rv = server->Initialize(port, peer_count,
+    channel_count, incoming_bandwith, outgoing_bandwith);
+  return rv ? server : NULL;
 }
 
 ClientHost* Enet::CreateClientHost(
@@ -56,9 +58,11 @@ ClientHost* Enet::CreateClientHost(
   uint32_t outgoing_bandwith
 ) {
   CHECK(_state == STATE_INITIALIZED);
-  ClientHost* client = ClientHost::Create(channel_count,
+  ClientHost* client = new ClientHost();
+  CHECK(client != NULL);
+  bool rv = client->Initialize(channel_count,
     incoming_bandwith, outgoing_bandwith);
-  return client;
+  return rv ? client : NULL;
 }
 
 Event* Enet::CreateEvent() {

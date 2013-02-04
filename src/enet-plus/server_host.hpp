@@ -21,14 +21,17 @@ class ServerHost {
 public:
   ENET_PLUS_DECL ~ServerHost();
 
-  // Broadcast data from 'data' with length of 'length' to all Peer's on 
-  // selected channel, associated with 'channel_id'.
-  // Returns 'true' on success, returns 'false' on error.
-  ENET_PLUS_DECL bool Broadcast(
-    const char* data,
-    size_t length,
-    bool reliable = true,
-    uint8_t channel_id = 0
+  // Initializes 'ServerHost'. 'ServerHost' starts on port 'port'.
+  // You may specify 'channel_count' - number of channels to be used.
+  // You may specify incoming and outgoing bandwidth of the server in bytes
+  // per second. Specifying '0' for these two options will cause ENet to rely
+  // entirely upon its dynamic throttling algorithm to manage bandwidth.
+  bool Initialize(
+    uint16_t port,
+    size_t peer_count = 32,
+    size_t channel_count = 1,
+    uint32_t incoming_bandwidth = 0,
+    uint32_t outgoing_bandwidth = 0
   );
 
   // Checks for events with a timeout. Should be called to send all queued
@@ -49,26 +52,21 @@ public:
   // Cleans up. Automatically called in the destructor.
   ENET_PLUS_DECL void Finalize();
 
+  // Broadcast data from 'data' with length of 'length' to all Peer's on 
+  // selected channel, associated with 'channel_id'.
+  // Returns 'true' on success, returns 'false' on error.
+  ENET_PLUS_DECL bool Broadcast(
+    const char* data,
+    size_t length,
+    bool reliable = true,
+    uint8_t channel_id = 0
+  );
+
 private:
   DISALLOW_COPY_AND_ASSIGN(ServerHost);
 
-  // Creates an uninitialized 'ServerHost'. This is an internal constructor
-  // used by 'ServerHost::Create'.
+  // Creates an uninitialized 'ServerHost'.
   ServerHost();
-
-  // Creates 'ServerHost' on port 'port'.
-  // You may specify 'channel_count' - number of channels to be used.
-  // You may specify incoming and outgoing bandwidth of the server in bytes
-  // per second. Specifying '0' for these two options will cause ENet to rely
-  // entirely upon its dynamic throttling algorithm to manage bandwidth.
-  // Returned 'ServerHost' should be deallocated manually.
-  static ServerHost* Create(
-    uint16_t port,
-    size_t peer_count = 32,
-    size_t channel_count = 1,
-    uint32_t incoming_bandwidth = 0,
-    uint32_t outgoing_bandwidth = 0
-  );
 
   enum {
     STATE_INITIALIZED,

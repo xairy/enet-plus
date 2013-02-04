@@ -14,29 +14,25 @@ ServerHost::~ServerHost() {
   }
 };
 
-bool ServerHost::Broadcast(
-  const char* data,
-  size_t length,
-  bool reliable,
-  uint8_t channel_id
+bool ServerHost::Initialize(
+  uint16_t port,
+  size_t peer_count,
+  size_t channel_count,
+  uint32_t incoming_bandwidth,
+  uint32_t outgoing_bandwidth
 ) {
-  CHECK(_state == STATE_INITIALIZED);
-  CHECK(data != NULL);
-  CHECK(length > 0);
+  ENetAddress address;
+  address.host = ENET_HOST_ANY;
+  address.port = port; // XXX: type cast.
 
-  enet_uint32 flags = 0;
-  if(reliable) {
-    flags = flags | ENET_PACKET_FLAG_RELIABLE;
-  }
-
-  ENetPacket* packet = enet_packet_create(data, length, flags);
-  if(packet == NULL) {
-    THROW_ERROR("Unable to create enet packet!");
+  _server = enet_host_create(&address, peer_count, channel_count,
+    incoming_bandwidth, outgoing_bandwidth);
+  if(_server == NULL) {
+    THROW_ERROR("Unable to create enet host!");
     return false;
   }
 
-  enet_host_broadcast(_server, channel_id, packet);
-
+  _state = STATE_INITIALIZED;
   return true;
 }
 
@@ -72,32 +68,31 @@ void ServerHost::Finalize() {
   _state = STATE_FINALIZED;
 };
 
-ServerHost::ServerHost() : _state(STATE_FINALIZED), _server(NULL) { }
-
-ServerHost* ServerHost::Create(
-  uint16_t port,
-  size_t peer_count,
-  size_t channel_count,
-  uint32_t incoming_bandwidth,
-  uint32_t outgoing_bandwidth
+bool ServerHost::Broadcast(
+  const char* data,
+  size_t length,
+  bool reliable,
+  uint8_t channel_id
 ) {
-  ServerHost* server = new ServerHost();
-  CHECK(server != NULL);
+  CHECK(_state == STATE_INITIALIZED);
+  CHECK(data != NULL);
+  CHECK(length > 0);
 
-  ENetAddress address;
-  address.host = ENET_HOST_ANY;
-  address.port = port; // XXX: type cast.
-
-  server->_server = enet_host_create(&address, peer_count, channel_count,
-    incoming_bandwidth, outgoing_bandwidth);
-  if(server->_server == NULL) {
-    THROW_ERROR("Unable to create enet host!");
-    delete server;
-    return NULL;
+  enet_uint32 flags = 0;
+  if(reliable) {
+    flags = flags | ENET_PACKET_FLAG_RELIABLE;
   }
 
-  server->_state = STATE_INITIALIZED;
-  return server;
+  ENetPacket* packet = enet_packet_create(data, length, flags);
+  if(packet == NULL) {
+    THROW_ERROR("Unable to create enet packet!");
+    return false;
+  }
+
+  enet_host_broadcast(_server, channel_id, packet);
+
+  return true;
 }
+ServerHost::ServerHost() : _state(STATE_FINALIZED), _server(NULL) { }
 
 } // namespace enet

@@ -33,7 +33,6 @@ function windows_libdir(base_path)
   restore_config()
 end
 
-
 solution "enet-plus"
   configurations { "debug", "release" }
   platforms { "x32", "x64" }
