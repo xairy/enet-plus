@@ -31,21 +31,20 @@ public:
 
     // A connection request initiated by 'ClientHost::Connect()' has completed.
     // You can use 'GetPeer()', 'GetPeerIp()', 'GetPeerPort()' methods to get
-    // information about connected peer.
+    // information about the connected peer.
     TYPE_CONNECT,
 
     // A peer has disconnected. This event is generated on a successful
     // completion of a disconnect initiated by 'Peer::Disconnect()'.
     // You can use 'GetPeer()', 'GetPeerIp()', 'GetPeerPort()' methods to get
-    // information about disconnected peer.
+    // information about the disconnected peer.
     TYPE_DISCONNECT,  
 
     // A packet has been received from a peer.
     // You can use 'GetPeer()', 'GetPeerIp()', 'GetPeerPort()' methods to get
-    // information about peer which sent the packet.
+    // information about the peer which sent the packet.
     // 'GetChannelId()' returns the channel number upon which the packet was
-    // received. 'GetData()' returns the data from received packet.
-    // This packet must be destroyed with 'DestroyPacket()' after use.
+    // received. 'GetData()' returns the data from the received packet.
     TYPE_RECEIVE
   };
 
@@ -63,12 +62,10 @@ public:
   // This method will fail on 'CHECK' in this case.
   ENET_PLUS_DECL void GetData(std::vector<char>* output) const;
 
-  // TODO: Get rid of this method.
   // Returns 'Peer', which caused the event. Returned 'Peer' should be
   // deallocated manually using 'delete'.
-  // WARNING: This method allocates new 'Peer' even if a 'Peer' associated
+  // FIXME: This method allocates new 'Peer' even if a 'Peer' associated
   // with a remote peer already exists.
-  // XXX: fix it?
   ENET_PLUS_DECL Peer* GetPeer();
 
   // Use this instead of 'GetPeer()' if you need to call only 'Peer's getters.
