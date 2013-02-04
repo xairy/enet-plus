@@ -20,7 +20,6 @@ class ClientHost;
 class Peer {
   friend class Event;
   friend class Host;
-  friend class ClientHost;
 
 public:
   // Queues a packet to be sent. 'data' is the allocated data for the packet.
@@ -28,6 +27,7 @@ public:
   // 'channel_id' is the id of the channel the packet will be sent through.
   // The packet will be sent after calling 'ServerHost::Service()' or
   // 'ClientHost::Service()' methods.
+  // Returns 'true' on success, returns 'false' on error.
   ENET_PLUS_DECL bool Send(
     const char* data,
     size_t length,

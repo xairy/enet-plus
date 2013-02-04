@@ -34,6 +34,7 @@ public:
   // per second. Specifying '0' for these two options will cause ENet to rely
   // entirely upon its dynamic throttling algorithm to manage bandwidth.
   // Returned 'ServerHost' should be deallocated manually using 'delete'.
+  // Returns 'NULL' on error.
   ENET_PLUS_DECL ServerHost* CreateServerHost(
     uint16_t port,
     size_t peer_count = 32,
@@ -48,6 +49,7 @@ public:
   // per second. Specifying '0' for these two options will cause ENet to rely
   // entirely upon its dynamic throttling algorithm to manage bandwidth.
   // Returned 'ClientHost' should be deallocated manually using 'delete'.
+  // Returns 'NULL' on error.
   ENET_PLUS_DECL ClientHost* CreateClientHost(
     size_t channel_count = 1,
     uint32_t incoming_bandwith = 0,

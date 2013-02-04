@@ -13,7 +13,6 @@ int main() {
   CHECK(server != NULL);
 
   Event* event = enet.CreateEvent();
-  CHECK(event != NULL);
 
   printf("Server started.\n");
 
@@ -25,7 +24,7 @@ int main() {
 
   while(is_running) {
     bool rv = server->Service(event, timeout);
-    CHECK(rv);
+    CHECK(rv == true);
 
     switch(event->GetType()) {
       case Event::TYPE_CONNECT: {
@@ -34,10 +33,10 @@ int main() {
           event->GetPeer()->GetPort());
 
         Peer* peer = event->GetPeer();
-        CHECK(peer != NULL);
         char msg[] = "Ohaio!";
         data.assign(msg, msg + sizeof(msg));
-        peer->Send(&data[0], data.size());
+        bool rv = peer->Send(&data[0], data.size());
+        CHECK(rv == true);
 
         break;
       }

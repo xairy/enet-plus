@@ -24,7 +24,6 @@
 
 // The SCHECK() macro is used for checking compile-time assertions, 
 // and will cause a compilation error if its assertion is not met.
-// FIXME: COMPILE_CHECK/COMPILE_ASSERT/CASSERT ?
 template<bool x> struct __SCHECK_F;
 template<      > struct __SCHECK_F <true> {};
 template<int  x> struct __SCHECK_P        {};
@@ -46,8 +45,5 @@ template<int  x> struct __SCHECK_P        {};
 #define DISALLOW_IMPLICIT_CONSTRUCTORS(TypeName) \
   TypeName();                                    \
   DISALLOW_COPY_AND_ASSIGN(TypeName)
-
-// TODO: Implement it.
-#define THREAD_LOCAL
 
 #endif // ENET_PLUS_BASE_MACROS_HPP_
