@@ -58,7 +58,7 @@ Peer* ClientHost::Connect(
     return NULL;
   }
 
-  Peer* peer = new Peer(enet_peer);
+  Peer* peer = Host::_GetPeer(enet_peer);
   CHECK(peer != NULL);
 
   return peer;

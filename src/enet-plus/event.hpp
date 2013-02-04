@@ -59,13 +59,10 @@ public:
   // Returns the data associated with the event. Data will be lost if
   // another event is delivered using 'ClientHost::Service()' or
   // 'ServerHost::Service()' using this instance of 'Event' class.
-  // This method will fail on 'CHECK' in this case.
   ENET_PLUS_DECL void GetData(std::vector<char>* output) const;
 
-  // Returns 'Peer', which caused the event. Returned 'Peer' should be
-  // deallocated manually using 'delete'.
-  // FIXME: This method allocates new 'Peer' even if a 'Peer' associated
-  // with a remote peer already exists.
+  // Returns 'Peer', which caused the event. Returned 'Peer' will be
+  // deallocated automatically.
   ENET_PLUS_DECL Peer* GetPeer();
 
   // Use this instead of 'GetPeer()' if you need to call only 'Peer's getters.
@@ -90,6 +87,9 @@ private:
   // 'False' if a packet received using 'ClientHost::Service()' or
   // 'ServerHost::Service()' hasn't been deallocated yet.
   bool _is_packet_destroyed;
+
+  // 'Host' that generated the event.
+  Host* _host;
 };
 
 } // namespace enet

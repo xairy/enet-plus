@@ -8,6 +8,7 @@
 #include <enet-plus/base/pstdint.hpp>
 
 #include <enet-plus/event.hpp>
+#include <enet-plus/peer.hpp>
 
 namespace enet {
 
@@ -55,6 +56,10 @@ bool Host::Initialize(
 void Host::Finalize() {
   CHECK(_state == STATE_INITIALIZED);
   enet_host_destroy(_host);
+  std::map<_ENetPeer*, Peer*>::iterator itr;
+  for(itr = _peers.begin(); itr != _peers.end(); ++itr) {
+    delete itr->second;
+  }
   _state = STATE_FINALIZED;
 };
 
@@ -76,6 +81,10 @@ bool Host::Service(Event* event, uint32_t timeout) {
     event->_is_packet_destroyed = false;
   }
 
+  if(event != NULL) {
+    event->_host = this;
+  }
+
   return true;
 }
 
@@ -85,5 +94,15 @@ void Host::Flush() {
 }
 
 Host::Host() : _state(STATE_FINALIZED), _host(NULL) { }
+
+Peer* Host::_GetPeer(_ENetPeer* enet_peer) {
+  CHECK(enet_peer != NULL);
+  if(_peers.count(enet_peer) == 0) {
+    Peer* peer = new Peer(enet_peer);
+    CHECK(peer != NULL);
+    _peers[enet_peer] = peer;
+  }
+  return _peers[enet_peer];
+}
 
 } // namespace enet

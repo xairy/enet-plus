@@ -8,6 +8,7 @@
 #include <enet-plus/base/error.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
+#include <enet-plus/host.hpp>
 #include <enet-plus/peer.hpp>
 
 namespace enet {
@@ -44,7 +45,8 @@ void Event::GetData(std::vector<char>* output) const {
 
 Peer* Event::GetPeer() {
   CHECK(_event->type != ENET_EVENT_TYPE_NONE);
-  Peer* peer = new Peer(_event->peer);
+  CHECK(_host != NULL);
+  Peer* peer = _host->_GetPeer(_event->peer);
   CHECK(peer != NULL);
   return peer;
 }

@@ -1,6 +1,7 @@
 #ifndef ENET_PLUS_HOST_HPP_
 #define ENET_PLUS_HOST_HPP_
 
+#include <map>
 #include <string>
 
 #include <enet-plus/base/macros.hpp>
@@ -9,15 +10,19 @@
 #include <enet-plus/dll.hpp>
 
 struct _ENetHost;
+struct _ENetPeer;
 
 namespace enet {
 
 class Enet;
 class Event;
+class Peer;
 
 // A server host for communicating with client hosts.
 // You can create a 'ServerHost' by using 'Enet::CreateServerHost'.
 class Host {
+  friend class Event;
+
 public:
   ENET_PLUS_DECL ~Host();
 
@@ -65,12 +70,17 @@ protected:
   // Creates an uninitialized 'Host'.
   Host();
 
+  // Returns 'Peer' associated with ENet's peer 'enet_peer'.
+  Peer* _GetPeer(_ENetPeer* enet_peer);
+
   enum {
     STATE_FINALIZED,
     STATE_INITIALIZED
   } _state;
 
   _ENetHost* _host;
+
+  std::map<_ENetPeer*, Peer*> _peers;
 };
 
 } // namespace enet

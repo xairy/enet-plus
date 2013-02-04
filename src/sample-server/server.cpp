@@ -20,7 +20,10 @@ int main() {
   uint32_t timeout = 100;
   std::vector<char> data;
 
-  while(true) {
+  bool is_running = true;
+  int counter = 0;
+
+  while(is_running) {
     bool rv = server->Service(event, timeout);
     CHECK(rv);
 
@@ -33,7 +36,6 @@ int main() {
         char msg[] = "Ohaio!";
         data.assign(msg, msg + sizeof(msg));
         peer->Send(&data[0], data.size());
-        delete peer;
 
         break;
       }
@@ -47,6 +49,12 @@ int main() {
 
       case Event::TYPE_DISCONNECT: {
         printf("Client %s:%u disconnected.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
+
+        counter += 1;
+        if(counter == 3) {
+          is_running = false;
+        }
+
         break;
       }
     }

@@ -19,6 +19,7 @@ class ClientHost;
 // may be sent or received from.
 class Peer {
   friend class Event;
+  friend class Host;
   friend class ClientHost;
 
 public:
