@@ -46,7 +46,7 @@ solution "enet-plus"
     flags { "NoExceptions" }
 
   configuration { "windows" }
-    includedirs { "src/windows" }
+    includedirs { "include/windows" }
     defines { "WIN32", "_WIN32" }
     defines { "_CRT_SECURE_NO_WARNINGS", "_CRT_NONSTDC_NO_DEPRECATE" }
 
@@ -63,9 +63,9 @@ solution "enet-plus"
     language "C++"
 
     defines { "ENET_PLUS_DLL" }
-    includedirs { "src" }
+    includedirs { "include" }
     files { "src/enet-plus/**.cpp",
-            "src/enet-plus/**.hpp" }
+            "include/enet-plus/**.hpp" }
 
     configuration "linux"
       links { "enet" }
@@ -80,9 +80,8 @@ solution "enet-plus"
     language "C++"
     targetname "sample-client"
 
-    includedirs { "src" }
-    files { "src/sample-client/**.cpp",
-            "src/sample-client/**.hpp" }
+    includedirs { "include" }
+    files { "src/sample-client/**.cpp" }
 
     links { "enet-plus" }
 
@@ -91,8 +90,7 @@ solution "enet-plus"
     language "C++"
     targetname "sample-server"
 
-    includedirs { "src" }
-    files { "src/sample-server/**.cpp",
-            "src/sample-server/**.hpp" }
+    includedirs { "include" }
+    files { "src/sample-server/**.cpp" }
 
     links { "enet-plus" }
