@@ -29,7 +29,9 @@ int main() {
 
     switch(event->GetType()) {
       case Event::TYPE_CONNECT: {
-        printf("Client %s:%u connected.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
+        printf("Client %s:%u connected.\n",
+          event->GetPeer()->GetIp().c_str(),
+          event->GetPeer()->GetPort());
 
         Peer* peer = event->GetPeer();
         CHECK(peer != NULL);
@@ -43,12 +45,16 @@ int main() {
       case Event::TYPE_RECEIVE: {
         event->GetData(&data);
         data.push_back(0);
-        printf("From %s:%u: %s\n", event->GetPeerIp().c_str(), event->GetPeerPort(), &data[0]);
+        printf("From %s:%u: %s\n",
+          event->GetPeer()->GetIp().c_str(),
+          event->GetPeer()->GetPort(), &data[0]);
         break;
       }
 
       case Event::TYPE_DISCONNECT: {
-        printf("Client %s:%u disconnected.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
+        printf("Client %s:%u disconnected.\n",
+          event->GetPeer()->GetIp().c_str(),
+          event->GetPeer()->GetPort());
 
         counter += 1;
         if(counter == 3) {
@@ -64,7 +70,6 @@ int main() {
 
   delete event;
 
-  server->Finalize();
   delete server;
 
   return EXIT_SUCCESS;

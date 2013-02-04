@@ -24,7 +24,7 @@ public:
   // Returns 'true' on success, returns 'false' on error.
   ENET_PLUS_DECL bool Initialize();
 
-  // Finalizes ENet.
+  // Cleans up.
   // Automatically called in the destructor.
   ENET_PLUS_DECL void Finalize();
 

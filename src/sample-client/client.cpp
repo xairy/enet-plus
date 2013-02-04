@@ -23,7 +23,8 @@ int main() {
   CHECK(rv);
   CHECK(event->GetType() == Event::TYPE_CONNECT);
 
-  printf("Connected to %s:%u.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
+  printf("Connected to %s:%u.\n", event->GetPeer()->GetIp().c_str(),
+    event->GetPeer()->GetPort());
 
   rv = client->Service(event, timeout);
   CHECK(rv);
@@ -50,12 +51,11 @@ int main() {
   CHECK(rv);
   CHECK(event->GetType() == Event::TYPE_DISCONNECT);
 
-  printf("Disconnected from %s:%u.\n", event->GetPeerIp().c_str(), event->GetPeerPort());
+  printf("Disconnected from %s:%u.\n", event->GetPeer()->GetIp().c_str(),
+    event->GetPeer()->GetPort());
 
   delete event;
-  delete peer;
 
-  client->Finalize();
   delete client;
 
   return 0;

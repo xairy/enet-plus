@@ -51,27 +51,6 @@ Peer* Event::GetPeer() {
   return peer;
 }
 
-std::string Event::GetPeerIp() const {
-  CHECK(_event->type != ENET_EVENT_TYPE_NONE);
-  const size_t size = 32;
-  char buffer[size];
-  if(enet_address_get_host_ip(&_event->peer->address, buffer, size) != 0) {
-    THROW_ERROR("Unable to get enet host ip!");
-    buffer[0] = 0;
-  }
-  return std::string(buffer);
-}
-
-uint16_t Event::GetPeerPort() const {
-  CHECK(_event->type != ENET_EVENT_TYPE_NONE);
-  return _event->peer->address.port; // XXX: type cast.
-}
-
-void* Event::GetPeerData() const {
-  CHECK(_event->type != ENET_EVENT_TYPE_NONE);
-  return _event->peer->data;
-}
-
 Event::Event() : _is_packet_destroyed(true) {
   _event = new ENetEvent();
   CHECK(_event != NULL);

@@ -65,12 +65,6 @@ public:
   // deallocated automatically.
   ENET_PLUS_DECL Peer* GetPeer();
 
-  // Use this instead of 'GetPeer()' if you need to call only 'Peer's getters.
-  // The description of these methods can be found in 'Peer' declaration.
-  ENET_PLUS_DECL std::string GetPeerIp() const;
-  ENET_PLUS_DECL uint16_t GetPeerPort() const;
-  ENET_PLUS_DECL void* GetPeerData() const;
-
 private:
   DISALLOW_COPY_AND_ASSIGN(Event);
 
