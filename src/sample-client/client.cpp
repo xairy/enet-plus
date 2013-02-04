@@ -1,3 +1,5 @@
+#include <vector>
+
 #include <enet-plus/base/error.hpp>
 
 #include <enet-plus/enet.hpp>
@@ -14,7 +16,7 @@ int main() {
 
   Peer* peer = client->Connect("127.0.0.1", 4242);
   CHECK(peer != NULL);
- 
+
   Event* event = enet.CreateEvent();
 
   uint32_t timeout = 100;
@@ -36,7 +38,7 @@ int main() {
   msg.push_back(0);
 
   printf("Message received: %s\n", &msg[0]);
-  
+
   char message[] = "Hello world!";
   rv = peer->Send(message, sizeof(message), true);
   CHECK(rv == true);

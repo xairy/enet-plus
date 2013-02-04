@@ -42,7 +42,7 @@ Peer* ClientHost::Connect(
   std::string server_ip,
   uint16_t port,
   size_t channel_count
-)	{
+) {
   CHECK(_state == STATE_INITIALIZED);
 
   ENetAddress address;
@@ -64,6 +64,6 @@ Peer* ClientHost::Connect(
   return peer;
 }
 
-ClientHost::ClientHost() : Host(), _state(STATE_FINALIZED) { };
+ClientHost::ClientHost() : Host(), _state(STATE_FINALIZED) { }
 
 } // namespace enet

@@ -24,7 +24,7 @@ class Event {
   friend class Host;
   friend class Enet;
 
-public:
+ public:
   enum EventType {
     // No event occurred within the specified time limit.
     TYPE_NONE,
@@ -38,7 +38,7 @@ public:
     // completion of a disconnect initiated by 'Peer::Disconnect()'.
     // You can use 'GetPeer()', 'GetPeerIp()', 'GetPeerPort()' methods to get
     // information about the disconnected peer.
-    TYPE_DISCONNECT,  
+    TYPE_DISCONNECT,
 
     // A packet has been received from a peer.
     // You can use 'GetPeer()', 'GetPeerIp()', 'GetPeerPort()' methods to get
@@ -65,9 +65,7 @@ public:
   // deallocated automatically.
   ENET_PLUS_DECL Peer* GetPeer();
 
-private:
-  DISALLOW_COPY_AND_ASSIGN(Event);
-
+ private:
   // Creates an uninitialized 'Event'. Don't use it yourself.
   // You can create an 'Event' by using 'Enet::CreateEvent'.
   Event();
@@ -77,13 +75,15 @@ private:
   void _DestroyPacket();
 
   _ENetEvent* _event;
-  
+
   // 'False' if a packet received using 'ClientHost::Service()' or
   // 'ServerHost::Service()' hasn't been deallocated yet.
   bool _is_packet_destroyed;
 
   // 'Host' that generated the event.
   Host* _host;
+
+  DISALLOW_COPY_AND_ASSIGN(Event);
 };
 
 } // namespace enet

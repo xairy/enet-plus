@@ -6,7 +6,7 @@
 
 // The CHECK() macro is used for checking assertions, and will cause
 // an immediate crash if its assertion is not met. DCHECK() is like
-// CHECK() but is only compiled in on debug builds. 
+// CHECK() but is only compiled in on debug builds.
 #define CHECK(x)                                                  \
   do {                                                            \
     if(!(x)) {                                                    \
@@ -22,13 +22,13 @@
 # define DCHECK(x) CHECK(x)
 #endif
 
-// The SCHECK() macro is used for checking compile-time assertions, 
+// The SCHECK() macro is used for checking compile-time assertions,
 // and will cause a compilation error if its assertion is not met.
 template<bool x> struct __SCHECK_F;
 template<      > struct __SCHECK_F <true> {};
 template<int  x> struct __SCHECK_P        {};
 #define SCHECK(B) \
-     typedef __SCHECK_P<sizeof(__SCHECK_F<((B)? true : false)>)> __SCHECK_ASSERT##__LINE__
+  typedef __SCHECK_P<sizeof(__SCHECK_F<((B)? true : false)>)> __SCHECK_ASSERT##__LINE__
 
 // A macro to disallow the copy constructor and operator= functions.
 // This should be used in the private: declarations for a class.

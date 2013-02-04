@@ -16,7 +16,7 @@ namespace enet {
 
 // You need to create and 'Initialize()' a 'Enet' instance to work with ENet.
 class Enet {
-public:
+ public:
   ENET_PLUS_DECL Enet();
   ENET_PLUS_DECL ~Enet();
 
@@ -60,13 +60,13 @@ public:
   // Returned 'Event' should be deallocated manually using 'delete'.
   ENET_PLUS_DECL Event* CreateEvent();
 
-private:
-  DISALLOW_COPY_AND_ASSIGN(Enet);
-
+ private:
   enum {
     STATE_FINALIZED,
     STATE_INITIALIZED,
   } _state;
+
+  DISALLOW_COPY_AND_ASSIGN(Enet);
 };
 
 } // namespace enet

@@ -21,7 +21,7 @@ class Peer {
   friend class Event;
   friend class Host;
 
-public:
+ public:
   // Queues a packet to be sent. 'data' is the allocated data for the packet.
   // 'length' is the length of the data. 'reliable' is the reliability flag.
   // 'channel_id' is the id of the channel the packet will be sent through.
@@ -74,13 +74,13 @@ public:
   // Returns the 'Peer''s internal data.
   ENET_PLUS_DECL void* GetData() const;
 
-private:
-  DISALLOW_COPY_AND_ASSIGN(Peer);
-
-  // Creates a 'Peer' associated with the ENet peer 'peer'. 
+ private:
+  // Creates a 'Peer' associated with the ENet peer 'peer'.
   Peer(_ENetPeer* peer);
-  
+
   _ENetPeer* _peer;
+
+  DISALLOW_COPY_AND_ASSIGN(Peer);
 };
 
 } // namespace enet

@@ -23,8 +23,8 @@ class Peer;
 class Host {
   friend class Event;
 
-public:
-  ENET_PLUS_DECL ~Host();
+ public:
+  ENET_PLUS_DECL virtual ~Host();
 
   // Initializes 'Host'.
   // 'ip' and 'port' are the address at which other peers may connect to this
@@ -64,9 +64,7 @@ public:
   // queued packets earlier than in a call to ClientHost::Service().
   ENET_PLUS_DECL virtual void Flush();
 
-protected:
-  DISALLOW_COPY_AND_ASSIGN(Host);
-
+ protected:
   // Creates an uninitialized 'Host'.
   Host();
 
@@ -81,6 +79,8 @@ protected:
   _ENetHost* _host;
 
   std::map<_ENetPeer*, Peer*> _peers;
+
+  DISALLOW_COPY_AND_ASSIGN(Host);
 };
 
 } // namespace enet

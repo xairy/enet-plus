@@ -23,7 +23,7 @@ class Peer;
 class ClientHost : public Host {
   friend class Enet;
 
-public:
+ public:
   ENET_PLUS_DECL ~ClientHost();
 
   // Initializes 'ClientHost'.
@@ -51,16 +51,16 @@ public:
     size_t channel_count = 1
   );
 
-private:
-  DISALLOW_COPY_AND_ASSIGN(ClientHost);
-
+ private:
   // Creates an uninitialized 'ClientHost'.
   ClientHost();
 
   enum {
-    STATE_FINALIZED, 
+    STATE_FINALIZED,
     STATE_INITIALIZED,
   } _state;
+
+  DISALLOW_COPY_AND_ASSIGN(ClientHost);
 };
 
 } // namespace enet

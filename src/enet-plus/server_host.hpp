@@ -20,7 +20,7 @@ class Event;
 class ServerHost : public Host {
   friend class Enet;
 
-public:
+ public:
   ENET_PLUS_DECL ~ServerHost();
 
   // Initializes 'ServerHost'. 'ServerHost' starts on port 'port'.
@@ -39,7 +39,7 @@ public:
   // Cleans up. Automatically called in the destructor.
   ENET_PLUS_DECL void Finalize();
 
-  // Broadcast data from 'data' with length of 'length' to all Peer's on 
+  // Broadcast data from 'data' with length of 'length' to all Peer's on
   // selected channel, associated with 'channel_id'.
   // Returns 'true' on success, returns 'false' on error.
   ENET_PLUS_DECL bool Broadcast(
@@ -49,9 +49,7 @@ public:
     uint8_t channel_id = 0
   );
 
-private:
-  DISALLOW_COPY_AND_ASSIGN(ServerHost);
-
+ private:
   // Creates an uninitialized 'ServerHost'.
   ServerHost();
 
@@ -59,6 +57,8 @@ private:
     STATE_INITIALIZED,
     STATE_FINALIZED
   } _state;
+
+  DISALLOW_COPY_AND_ASSIGN(ServerHost);
 };
 
 } // namespace enet
