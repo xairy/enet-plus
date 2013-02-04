@@ -1,3 +1,5 @@
+#include <enet-plus/client_host.hpp>
+
 #include <string>
 
 #include <enet/enet.h>
@@ -5,9 +7,7 @@
 #include <enet-plus/base/error.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
-#include <enet-plus/event.hpp>
 #include <enet-plus/peer.hpp>
-#include <enet-plus/client_host.hpp>
 #include <enet-plus/host.hpp>
 
 namespace enet {
