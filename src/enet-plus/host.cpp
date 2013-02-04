@@ -22,7 +22,7 @@ bool Host::Initialize(
   uint32_t incoming_bandwidth,
   uint32_t outgoing_bandwidth
 ) {
-  ENetAddress address_ptr = NULL;
+  ENetAddress* address_ptr = NULL;
 
   ENetAddress address;
   if(ip != "" || port != 0) {
@@ -31,6 +31,8 @@ bool Host::Initialize(
         THROW_ERROR("Unable to set enet host address!");
         return NULL;
       }
+    } else {
+      address.host = ENET_HOST_ANY;
     }
     address.port = port; // XXX: type cast.
     address_ptr = &address;

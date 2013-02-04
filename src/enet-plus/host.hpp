@@ -17,7 +17,7 @@ class Event;
 // You can create a 'ServerHost' by using 'Enet::CreateServerHost'.
 class Host {
 public:
-  ~Host();
+  ENET_PLUS_DECL ~Host();
 
   // Initializes 'Host'.
   // 'ip' and 'port' are the address at which other peers may connect to this
@@ -30,7 +30,7 @@ public:
   // bandwidth of the server in bytes per second. Specifying '0' for these two
   // options will cause ENet to rely entirely upon its dynamic throttling
   // algorithm to manage bandwidth.
-  bool Initialize(
+  ENET_PLUS_DECL bool Initialize(
     const std::string& ip,
     uint16_t port,
     size_t peer_count,
@@ -58,6 +58,9 @@ public:
   ENET_PLUS_DECL virtual void Flush();
 
 protected:
+  DISALLOW_COPY_AND_ASSIGN(Host);
+
+  // Creates an uninitialized 'Host'.
   Host();
 
   enum {

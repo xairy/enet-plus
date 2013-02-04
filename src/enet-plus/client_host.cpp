@@ -8,6 +8,7 @@
 #include <enet-plus/event.hpp>
 #include <enet-plus/peer.hpp>
 #include <enet-plus/client_host.hpp>
+#include <enet-plus/host.hpp>
 
 namespace enet {
 
@@ -22,10 +23,9 @@ bool ClientHost::Initialize(
   uint32_t incoming_bandwidth,
   uint32_t outgoing_bandwidth
 ) {
-  _client = enet_host_create(NULL, 1, channel_count,
+  bool rv = Host::Initialize("", 0, 1, channel_count,
     incoming_bandwidth, outgoing_bandwidth);
-  if(_client == NULL) {
-    THROW_ERROR("Unable to create enet host!");
+  if(rv == false) {
     return false;
   }
 
@@ -35,35 +35,8 @@ bool ClientHost::Initialize(
 
 void ClientHost::Finalize() {
   CHECK(_state == STATE_INITIALIZED);
-  enet_host_destroy(_client);
   _state = STATE_FINALIZED;
 };
-
-bool ClientHost::Service(Event* event, uint32_t timeout) {
-  CHECK(_state == STATE_INITIALIZED);
-
-  if(event != NULL) {
-    event->_DestroyPacket();
-  }
-
-  int rv = enet_host_service(_client,
-    (event == NULL) ? NULL : event->_event, timeout);
-
-  if(rv < 0) {
-    THROW_ERROR("Unable to service enet host!");
-    return false;
-  }
-  if(rv > 0) {
-    event->_is_packet_destroyed = false;
-  }
-
-  return true;
-}
-
-void ClientHost::Flush() {
-  CHECK(_state == STATE_INITIALIZED);
-  enet_host_flush(_client);
-}
 
 Peer* ClientHost::Connect(
   std::string server_ip,
@@ -79,7 +52,7 @@ Peer* ClientHost::Connect(
   }
   address.port = port; // XXX: type cast.
 
-  ENetPeer* enet_peer = enet_host_connect(_client, &address, channel_count, 0);
+  ENetPeer* enet_peer = enet_host_connect(_host, &address, channel_count, 0);
   if(enet_peer == NULL) {
     THROW_ERROR("Enet host is unable to connect!");
     return NULL;
@@ -91,6 +64,6 @@ Peer* ClientHost::Connect(
   return peer;
 }
 
-ClientHost::ClientHost() : _state(STATE_FINALIZED), _client(NULL) { };
+ClientHost::ClientHost() : Host(), _state(STATE_FINALIZED) { };
 
 } // namespace enet

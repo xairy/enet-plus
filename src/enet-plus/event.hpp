@@ -14,16 +14,14 @@ struct _ENetEvent;
 namespace enet {
 
 class Enet;
-class ClientHost;
-class ServerHost;
+class Host;
 class Peer;
 
 // 'Event' class represents an event that can be delivered by
 // 'ClientHost::Service' and 'ServerHost::Service' methods.
 // You can create an empty 'Event' by using 'Enet::CreateEvent'.
 class Event {
-  friend class ClientHost;
-  friend class ServerHost;
+  friend class Host;
   friend class Enet;
 
 public:

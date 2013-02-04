@@ -6,6 +6,8 @@
 #include <enet-plus/base/macros.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
+#include <enet-plus/host.hpp>
+
 #include <enet-plus/dll.hpp>
 
 struct _ENetHost;
@@ -18,7 +20,7 @@ class Peer;
 
 // A client host for communicating with a server host.
 // You can create a 'ClientHost' by using 'Enet::CreateClientHost'.
-class ClientHost {
+class ClientHost : public Host {
   friend class Enet;
 
 public:
@@ -37,21 +39,6 @@ public:
 
   // Cleans up. Automatically called in the destructor.
   ENET_PLUS_DECL void Finalize();
-
-  // Checks for events with a timeout. Should be called to send all queued
-  // with 'Peer::Send()' packets. 'event' is an 'Event' class where event
-  // details will be placed if one occurs.
-  // If a timeout of '0' is specified, 'Service()' will return immediately
-  // if there are no events to dispatch. If 'event' is 'NULL' then no events
-  // will be delivered.
-  // An 'Event' with type 'EVENT_NONE' will be placed in 'event' if no event
-  // occured within the specified time limit.
-  // Returns 'true' on success, returns 'false' on error.
-  ENET_PLUS_DECL bool Service(Event* event, uint32_t timeout);
-
-  // This function is needed only be used in circumstances where one wishes to
-  // send queued packets earlier than in a call to 'ServerHost::Service()'.
-  ENET_PLUS_DECL void Flush();
 
   // Initiates connection procedure to another host. To complete connection,
   // an event 'EVENT_CONNECT' should be dispatched using 'Service()'.
@@ -74,8 +61,6 @@ private:
     STATE_FINALIZED, 
     STATE_INITIALIZED,
   } _state;
-
-  _ENetHost* _client;
 };
 
 } // namespace enet
