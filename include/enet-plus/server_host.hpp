@@ -16,7 +16,7 @@ class Enet;
 class Event;
 
 // A server host for communicating with client hosts.
-// You can create a 'ServerHost' by using 'Enet::CreateServerHost'.
+// You can create a 'ServerHost' using 'Enet::CreateServerHost'.
 class ServerHost : public Host {
   friend class Enet;
 
@@ -24,7 +24,8 @@ class ServerHost : public Host {
   ENET_PLUS_DECL ~ServerHost();
 
   // Initializes 'ServerHost'. 'ServerHost' starts on port 'port'.
-  // You may specify 'channel_count' - number of channels to be used.
+  // You may specify 'peer_count' - the maximum allowable number of
+  // connected peers, 'channel_count' - the number of channels to be used.
   // You may specify incoming and outgoing bandwidth of the server in bytes
   // per second. Specifying '0' for these two options will cause ENet to rely
   // entirely upon its dynamic throttling algorithm to manage bandwidth.
@@ -48,6 +49,12 @@ class ServerHost : public Host {
     bool reliable = true,
     uint8_t channel_id = 0
   );
+
+  // Look in 'host.hpp' for the description.
+  // ENET_PLUS_DECL virtual bool Service(Event* event, uint32_t timeout);
+
+  // Look in 'host.hpp' for the description.
+  // ENET_PLUS_DECL virtual void Flush();
 
  private:
   // Creates an uninitialized 'ServerHost'.

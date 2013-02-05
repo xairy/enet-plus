@@ -80,6 +80,7 @@ class Host {
 
   std::map<_ENetPeer*, Peer*> _peers;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(Host);
 };
 
