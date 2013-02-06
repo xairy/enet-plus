@@ -1,7 +1,5 @@
 #include <vector>
 
-#include <enet-plus/base/error.hpp>
-
 #include <enet-plus/enet.hpp>
 
 using namespace enet;

@@ -2,7 +2,6 @@
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/error.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
 #include <enet-plus/event.hpp>
@@ -55,7 +54,7 @@ bool ServerHost::Broadcast(
 
   ENetPacket* packet = enet_packet_create(data, length, flags);
   if(packet == NULL) {
-    THROW_ERROR("Unable to create enet packet!");
+    //THROW_ERROR("Unable to create enet packet!");
     return false;
   }
 

@@ -5,7 +5,6 @@
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/error.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
 #include <enet-plus/event.hpp>
@@ -33,8 +32,8 @@ bool Host::Initialize(
   if(ip != "" || port != 0) {
     if(ip != "") {
       if(enet_address_set_host(&address, ip.c_str()) != 0) {
-        THROW_ERROR("Unable to set enet host address!");
-        return NULL;
+        //THROW_ERROR("Unable to set enet host address!");
+        return false;
       }
     } else {
       address.host = ENET_HOST_ANY;
@@ -46,7 +45,7 @@ bool Host::Initialize(
   _host = enet_host_create(address_ptr, peer_count, channel_count,
     incoming_bandwidth, outgoing_bandwidth);
   if(_host == NULL) {
-    THROW_ERROR("Unable to create enet host!");
+    //THROW_ERROR("Unable to create enet host!");
     return false;
   }
 
@@ -75,7 +74,7 @@ bool Host::Service(Event* event, uint32_t timeout) {
     (event == NULL) ? NULL : event->_event, timeout);
 
   if(rv < 0) {
-    THROW_ERROR("Unable to service enet host!");
+    //THROW_ERROR("Unable to service enet host!");
     return false;
   }
   if(rv > 0) {

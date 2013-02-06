@@ -5,7 +5,6 @@
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/error.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
 #include <enet-plus/host.hpp>

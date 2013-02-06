@@ -4,7 +4,6 @@
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/error.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
 #include <enet-plus/peer.hpp>
@@ -47,14 +46,14 @@ Peer* ClientHost::Connect(
 
   ENetAddress address;
   if(enet_address_set_host(&address, server_ip.c_str()) != 0) {
-    THROW_ERROR("Unable to set enet host address!");
+    //THROW_ERROR("Unable to set enet host address!");
     return NULL;
   }
   address.port = port; // XXX: type cast.
 
   ENetPeer* enet_peer = enet_host_connect(_host, &address, channel_count, 0);
   if(enet_peer == NULL) {
-    THROW_ERROR("Enet host is unable to connect!");
+    //THROW_ERROR("Enet host is unable to connect!");
     return NULL;
   }
 

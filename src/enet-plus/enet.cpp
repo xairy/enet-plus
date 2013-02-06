@@ -4,7 +4,6 @@
 // XXX: windows sucks
 #undef CreateEvent
 
-#include <enet-plus/base/error.hpp>
 #include <enet-plus/base/macros.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
@@ -26,7 +25,7 @@ Enet::~Enet() {
 bool Enet::Initialize() {
   CHECK(_state == STATE_FINALIZED);
   if(enet_initialize() != 0) {
-    THROW_ERROR("Unable to initialize enet!");
+    //THROW_ERROR("Unable to initialize enet!");
     return false;
   }
   _state = STATE_INITIALIZED;
