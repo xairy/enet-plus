@@ -69,6 +69,7 @@ solution "enet-plus"
 
     configuration "linux"
       links { "enet" }
+      linkoptions { "-Wl,-soname,libenet-plus.so.0" }
     configuration "windows"
       includedirs { "third-party/enet/include" }      
       windows_libdir("third-party/enet/bin")
