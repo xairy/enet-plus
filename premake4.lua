@@ -70,6 +70,11 @@ solution "enet-plus"
     configuration "linux"
       links { "enet" }
       linkoptions { "-Wl,-soname,libenet-plus.so.0" }
+      targetextension ".so.0.1"
+      prelinkcommands { "cd ../bin;" ..
+                        "ln -s libenet-plus.so.0.1 libenet-plus.so.0;" ..
+                        "ln -s libenet-plus.so.0 libenet-plus.so;" ..
+                        "cd ../build" }
     configuration "windows"
       includedirs { "third-party/enet/include" }      
       windows_libdir("third-party/enet/bin")
