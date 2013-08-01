@@ -18,8 +18,7 @@ class Enet;
 class Event;
 class Peer;
 
-// A server host for communicating with client hosts.
-// You can create a 'ServerHost' by using 'Enet::CreateServerHost'.
+// Internally used class. Use 'ServerHost' and 'ClientHost' instead.
 class Host {
   friend class Event;
 
@@ -61,7 +60,7 @@ class Host {
   ENET_PLUS_DECL virtual bool Service(Event* event, uint32_t timeout);
 
   // This function need only be used in circumstances where one wishes to send
-  // queued packets earlier than in a call to ClientHost::Service().
+  // queued packets earlier than in a call to 'Service()'.
   ENET_PLUS_DECL virtual void Flush();
 
  protected:
