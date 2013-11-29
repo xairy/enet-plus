@@ -3,19 +3,19 @@ A C++ wrapper for the ENet networking library (http://enet.bespin.org/).
 Examples of usage can be found in enet-plus/src/sample-client and enet-plus/src/sample-server.
 
 How to install on Ubuntu Linux x64:
-  1. > sudo apt-get install libenet1a libenet-dev
-  2. Download deb packages from the Downloads section.
-  3. > sudo dpkg -i libenet-plus_0.1-1_amd64.deb
-  4. > sudo dpkg -i libenet-plus-dev_0.1-1_amd64.deb
+  1. $ sudo apt-get install libenet1a libenet-dev
+  2. Download deb packages from the releases section
+  3. $ sudo dpkg -i libenet-plus_0.1-1_amd64.deb
+  4. $ sudo dpkg -i libenet-plus-dev_0.1-1_amd64.deb
 
 How to uninstall on Ubuntu Linux:
-  1. > sudo apt-get remove libenet-plus0-dev
-  2. > sudo apt-get remove libenet-plus0
+  1. $ sudo apt-get remove libenet-plus0-dev
+  2. $ sudo apt-get remove libenet-plus0
 
 How to build on Ubuntu Linux:
-  1. > ./premake4 gmake
-  2. > cd build
+  1. $ ./premake4 gmake
+  2. $ cd build
   3. On x32 system:
-     > make config=release32
+     $ make config=release32
      On x64 system:
-     > make config=release64
+     $ make config=release64
