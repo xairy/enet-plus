@@ -3,8 +3,8 @@
 #ifndef ENET_PLUS_ENET_HPP_
 #define ENET_PLUS_ENET_HPP_
 
-#include <enet-plus/base/macros.hpp>
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/macros.h"
+#include "enet-plus/base/pstdint.h"
 
 #include "enet-plus/host.h"
 #include "enet-plus/server_host.h"

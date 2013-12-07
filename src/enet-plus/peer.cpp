@@ -37,7 +37,7 @@ bool Peer::Send(
 std::string Peer::GetIp() const {
   const size_t BUFFER_SIZE = 32;
   char buffer[BUFFER_SIZE];
-  if (enet_address_get_host_ip(&_peer->address, buffer, buffer_size) != 0) {
+  if (enet_address_get_host_ip(&_peer->address, buffer, BUFFER_SIZE) != 0) {
     // THROW_ERROR("Unable to get enet host ip!");
     buffer[0] = 0;
   }

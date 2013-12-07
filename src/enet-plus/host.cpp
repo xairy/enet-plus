@@ -1,6 +1,6 @@
 // Copyright (c) 2013 Andrey Konovalov
 
-#include "enet-plus/host.hpp"
+#include "enet-plus/host.h"
 
 #include <map>
 #include <string>

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "enet-plus/enet.hpp"
+#include "enet-plus/enet.h"
 
 int main() {
   enet::Enet enet;

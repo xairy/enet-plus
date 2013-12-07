@@ -5,10 +5,10 @@
 
 #include <string>
 
-#include "enet-plus/base/macros.hpp"
-#include "enet-plus/base/pstdint.hpp"
+#include "enet-plus/base/macros.h"
+#include "enet-plus/base/pstdint.h"
 
-#include "enet-plus/dll.hpp"
+#include "enet-plus/dll.h"
 
 struct _ENetPeer;
 
