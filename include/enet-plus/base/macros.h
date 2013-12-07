@@ -1,3 +1,5 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #ifndef ENET_PLUS_BASE_MACROS_HPP_
 #define ENET_PLUS_BASE_MACROS_HPP_
 
@@ -10,12 +12,12 @@
 #ifndef CHECK
   #define CHECK(x)                                                  \
     do {                                                            \
-      if(!(x)) {                                                    \
+      if (!(x)) {                                                   \
         fprintf(stderr, "Assertion failed: %s, file %s, line %u\n", \
           #x, __FILE__, __LINE__);                                  \
         abort();                                                    \
       }                                                             \
-    } while(0)
+    } while (0)
 #endif
 
 #ifndef DCHECK
@@ -33,7 +35,8 @@
   template<      > struct __SCHECK_F <true> {};
   template<int  x> struct __SCHECK_P        {};
   #define SCHECK(B) \
-    typedef __SCHECK_P<sizeof(__SCHECK_F<((B)? true : false)>)> __SCHECK_ASSERT##__LINE__
+    typedef __SCHECK_P<sizeof(__SCHECK_F<((B)? true : false)>)> \
+    __SCHECK_ASSERT##__LINE__
 #endif
 
 // A macro to disallow the copy constructor and operator= functions.
@@ -56,4 +59,4 @@
     DISALLOW_COPY_AND_ASSIGN(TypeName)
 #endif
 
-#endif // ENET_PLUS_BASE_MACROS_HPP_
+#endif  // ENET_PLUS_BASE_MACROS_HPP_

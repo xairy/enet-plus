@@ -1,31 +1,33 @@
-#include <enet-plus/enet.hpp>
+// Copyright (c) 2013 Andrey Konovalov
+
+#include "enet-plus/enet.h"
 
 #include <enet/enet.h>
-// XXX: windows sucks
+// XXX: Windows sucks.
 #undef CreateEvent
 
-#include <enet-plus/base/macros.hpp>
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/macros.h"
+#include "enet-plus/base/pstdint.h"
 
-#include <enet-plus/host.hpp>
-#include <enet-plus/server_host.hpp>
-#include <enet-plus/client_host.hpp>
-#include <enet-plus/event.hpp>
+#include "enet-plus/host.h"
+#include "enet-plus/server_host.h"
+#include "enet-plus/client_host.h"
+#include "enet-plus/event.h"
 
 namespace enet {
 
 Enet::Enet() : _state(STATE_FINALIZED) { }
 
 Enet::~Enet() {
-  if(_state == STATE_INITIALIZED) {
+  if (_state == STATE_INITIALIZED) {
     Finalize();
   }
 }
 
 bool Enet::Initialize() {
   CHECK(_state == STATE_FINALIZED);
-  if(enet_initialize() != 0) {
-    //THROW_ERROR("Unable to initialize enet!");
+  if (enet_initialize() != 0) {
+    // THROW_ERROR("Unable to initialize enet!");
     return false;
   }
   _state = STATE_INITIALIZED;
@@ -72,4 +74,4 @@ Event* Enet::CreateEvent() {
   return event;
 }
 
-} // namespace enet
+}  // namespace enet

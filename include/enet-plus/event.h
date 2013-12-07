@@ -1,13 +1,15 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #ifndef ENET_PLUS_EVENT_HPP_
 #define ENET_PLUS_EVENT_HPP_
 
 #include <string>
 #include <vector>
 
-#include <enet-plus/base/macros.hpp>
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/macros.h"
+#include "enet-plus/base/pstdint.h"
 
-#include <enet-plus/dll.hpp>
+#include "enet-plus/dll.h"
 
 struct _ENetEvent;
 
@@ -86,6 +88,6 @@ class Event {
   DISALLOW_COPY_AND_ASSIGN(Event);
 };
 
-} // namespace enet
+}  // namespace enet
 
-#endif // ENET_PLUS_EVENT_HPP_
+#endif  // ENET_PLUS_EVENT_HPP_

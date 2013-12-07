@@ -1,3 +1,5 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #ifndef ENET_PLUS_DLL_HPP_
 #define ENET_PLUS_DLL_HPP_
 
@@ -11,4 +13,4 @@
   #define ENET_PLUS_DECL
 #endif
 
-#endif // ENET_PLUS_DLL_HPP_
+#endif  // ENET_PLUS_DLL_HPP_

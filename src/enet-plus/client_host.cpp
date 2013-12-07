@@ -1,18 +1,20 @@
-#include <enet-plus/client_host.hpp>
+// Copyright (c) 2013 Andrey Konovalov
+
+#include "enet-plus/client_host.h"
 
 #include <string>
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/pstdint.h"
 
-#include <enet-plus/peer.hpp>
-#include <enet-plus/host.hpp>
+#include "enet-plus/peer.h"
+#include "enet-plus/host.h"
 
 namespace enet {
 
 ClientHost::~ClientHost() {
-  if(_state == STATE_INITIALIZED) {
+  if (_state == STATE_INITIALIZED) {
     Finalize();
   }
 }
@@ -24,7 +26,7 @@ bool ClientHost::Initialize(
 ) {
   bool rv = Host::Initialize("", 0, 1, channel_count,
     incoming_bandwidth, outgoing_bandwidth);
-  if(rv == false) {
+  if (rv == false) {
     return false;
   }
 
@@ -45,15 +47,15 @@ Peer* ClientHost::Connect(
   CHECK(_state == STATE_INITIALIZED);
 
   ENetAddress address;
-  if(enet_address_set_host(&address, server_ip.c_str()) != 0) {
-    //THROW_ERROR("Unable to set enet host address!");
+  if (enet_address_set_host(&address, server_ip.c_str()) != 0) {
+    // THROW_ERROR("Unable to set enet host address!");
     return NULL;
   }
-  address.port = port; // XXX: type cast.
+  address.port = port;  // XXX: type cast.
 
   ENetPeer* enet_peer = enet_host_connect(_host, &address, channel_count, 0);
-  if(enet_peer == NULL) {
-    //THROW_ERROR("Enet host is unable to connect!");
+  if (enet_peer == NULL) {
+    // THROW_ERROR("Enet host is unable to connect!");
     return NULL;
   }
 
@@ -65,4 +67,4 @@ Peer* ClientHost::Connect(
 
 ClientHost::ClientHost() : Host(), _state(STATE_FINALIZED) { }
 
-} // namespace enet
+}  // namespace enet

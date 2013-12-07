@@ -1,27 +1,27 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #include <vector>
 
-#include <enet-plus/enet.hpp>
-
-using namespace enet;
+#include "enet-plus/enet.hpp"
 
 int main() {
-  Enet enet;
+  enet::Enet enet;
   bool rv = enet.Initialize();
   CHECK(rv == true);
 
-  ClientHost* client = enet.CreateClientHost();
+  enet::ClientHost* client = enet.CreateClientHost();
   CHECK(client != NULL);
 
-  Peer* peer = client->Connect("127.0.0.1", 4242);
+  enet::Peer* peer = client->Connect("127.0.0.1", 4242);
   CHECK(peer != NULL);
 
-  Event* event = enet.CreateEvent();
+  enet::Event* event = enet.CreateEvent();
 
   uint32_t timeout = 100;
 
   rv = client->Service(event, timeout);
   CHECK(rv == true);
-  CHECK(event->GetType() == Event::TYPE_CONNECT);
+  CHECK(event->GetType() == enet::Event::TYPE_CONNECT);
 
   printf("Connected to %s:%u.\n",
     event->GetPeer()->GetIp().c_str(),
@@ -29,7 +29,7 @@ int main() {
 
   rv = client->Service(event, timeout);
   CHECK(rv == true);
-  CHECK(event->GetType() == Event::TYPE_RECEIVE);
+  CHECK(event->GetType() == enet::Event::TYPE_RECEIVE);
 
   std::vector<char> msg;
   event->GetData(&msg);
@@ -50,7 +50,7 @@ int main() {
 
   rv = client->Service(event, timeout);
   CHECK(rv == true);
-  CHECK(event->GetType() == Event::TYPE_DISCONNECT);
+  CHECK(event->GetType() == enet::Event::TYPE_DISCONNECT);
 
   printf("Disconnected from %s:%u.\n",
     event->GetPeer()->GetIp().c_str(),

@@ -1,16 +1,18 @@
-#include <enet-plus/server_host.hpp>
+// Copyright (c) 2013 Andrey Konovalov
+
+#include "enet-plus/server_host.h"
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/pstdint.h"
 
-#include <enet-plus/event.hpp>
-#include <enet-plus/host.hpp>
+#include "enet-plus/event.h"
+#include "enet-plus/host.h"
 
 namespace enet {
 
 ServerHost::~ServerHost() {
-  if(_state == STATE_INITIALIZED) {
+  if (_state == STATE_INITIALIZED) {
     Finalize();
   }
 };
@@ -24,7 +26,7 @@ bool ServerHost::Initialize(
 ) {
   bool rv = Host::Initialize("", port, peer_count, channel_count,
     incoming_bandwidth, outgoing_bandwidth);
-  if(rv == false) {
+  if (rv == false) {
     return false;
   }
 
@@ -48,13 +50,13 @@ bool ServerHost::Broadcast(
   CHECK(length > 0);
 
   enet_uint32 flags = 0;
-  if(reliable) {
+  if (reliable) {
     flags = flags | ENET_PACKET_FLAG_RELIABLE;
   }
 
   ENetPacket* packet = enet_packet_create(data, length, flags);
-  if(packet == NULL) {
-    //THROW_ERROR("Unable to create enet packet!");
+  if (packet == NULL) {
+    // THROW_ERROR("Unable to create enet packet!");
     return false;
   }
 
@@ -65,4 +67,4 @@ bool ServerHost::Broadcast(
 
 ServerHost::ServerHost() : Host(), _state(STATE_FINALIZED) { }
 
-} // namespace enet
+}  // namespace enet

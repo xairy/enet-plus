@@ -1,14 +1,16 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #ifndef ENET_PLUS_CLIENT_HOST_HPP_
 #define ENET_PLUS_CLIENT_HOST_HPP_
 
 #include <string>
 
-#include <enet-plus/base/macros.hpp>
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/macros.h"
+#include "enet-plus/base/pstdint.h"
 
-#include <enet-plus/host.hpp>
+#include "enet-plus/host.h"
 
-#include <enet-plus/dll.hpp>
+#include "enet-plus/dll.h"
 
 struct _ENetHost;
 
@@ -34,8 +36,7 @@ class ClientHost : public Host {
   ENET_PLUS_DECL bool Initialize(
     size_t channel_count = 1,
     uint32_t incoming_bandwidth = 0,
-    uint32_t outgoing_bandwidth = 0
-  );
+    uint32_t outgoing_bandwidth = 0);
 
   // Cleans up. Automatically called in the destructor.
   ENET_PLUS_DECL void Finalize();
@@ -48,8 +49,7 @@ class ClientHost : public Host {
   ENET_PLUS_DECL Peer* Connect(
     std::string server_ip,
     uint16_t port,
-    size_t channel_count = 1
-  );
+    size_t channel_count = 1);
 
   // Look in 'host.hpp' for the description.
   // ENET_PLUS_DECL virtual bool Service(Event* event, uint32_t timeout);
@@ -69,6 +69,6 @@ class ClientHost : public Host {
   DISALLOW_COPY_AND_ASSIGN(ClientHost);
 };
 
-} // namespace enet
+}  // namespace enet
 
-#endif // ENET_PLUS_CLIENT_HOST_HPP_
+#endif  // ENET_PLUS_CLIENT_HOST_HPP_

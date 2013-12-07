@@ -1,19 +1,21 @@
-#include <enet-plus/host.hpp>
+// Copyright (c) 2013 Andrey Konovalov
+
+#include "enet-plus/host.hpp"
 
 #include <map>
 #include <string>
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/pstdint.h"
 
-#include <enet-plus/event.hpp>
-#include <enet-plus/peer.hpp>
+#include "enet-plus/event.h"
+#include "enet-plus/peer.h"
 
 namespace enet {
 
 Host::~Host() {
-  if(_state == STATE_INITIALIZED) {
+  if (_state == STATE_INITIALIZED) {
     Finalize();
   }
 };
@@ -29,23 +31,23 @@ bool Host::Initialize(
   ENetAddress* address_ptr = NULL;
 
   ENetAddress address;
-  if(ip != "" || port != 0) {
-    if(ip != "") {
-      if(enet_address_set_host(&address, ip.c_str()) != 0) {
-        //THROW_ERROR("Unable to set enet host address!");
+  if (ip != "" || port != 0) {
+    if (ip != "") {
+      if (enet_address_set_host(&address, ip.c_str()) != 0) {
+        // THROW_ERROR("Unable to set enet host address!");
         return false;
       }
     } else {
       address.host = ENET_HOST_ANY;
     }
-    address.port = port; // XXX: type cast.
+    address.port = port;  // XXX: type cast.
     address_ptr = &address;
   }
 
   _host = enet_host_create(address_ptr, peer_count, channel_count,
     incoming_bandwidth, outgoing_bandwidth);
-  if(_host == NULL) {
-    //THROW_ERROR("Unable to create enet host!");
+  if (_host == NULL) {
+    // THROW_ERROR("Unable to create enet host!");
     return false;
   }
 
@@ -57,7 +59,7 @@ void Host::Finalize() {
   CHECK(_state == STATE_INITIALIZED);
   enet_host_destroy(_host);
   std::map<_ENetPeer*, Peer*>::iterator itr;
-  for(itr = _peers.begin(); itr != _peers.end(); ++itr) {
+  for (itr = _peers.begin(); itr != _peers.end(); ++itr) {
     delete itr->second;
   }
   _state = STATE_FINALIZED;
@@ -66,22 +68,22 @@ void Host::Finalize() {
 bool Host::Service(Event* event, uint32_t timeout) {
   CHECK(_state == STATE_INITIALIZED);
 
-  if(event != NULL) {
+  if (event != NULL) {
     event->_DestroyPacket();
   }
 
   int rv = enet_host_service(_host,
     (event == NULL) ? NULL : event->_event, timeout);
 
-  if(rv < 0) {
-    //THROW_ERROR("Unable to service enet host!");
+  if (rv < 0) {
+    // THROW_ERROR("Unable to service enet host!");
     return false;
   }
-  if(rv > 0) {
+  if (rv > 0) {
     event->_is_packet_destroyed = false;
   }
 
-  if(event != NULL) {
+  if (event != NULL) {
     event->_host = this;
   }
 
@@ -97,7 +99,7 @@ Host::Host() : _state(STATE_FINALIZED), _host(NULL) { }
 
 Peer* Host::_GetPeer(_ENetPeer* enet_peer) {
   CHECK(enet_peer != NULL);
-  if(_peers.count(enet_peer) == 0) {
+  if (_peers.count(enet_peer) == 0) {
     Peer* peer = new Peer(enet_peer);
     CHECK(peer != NULL);
     _peers[enet_peer] = peer;
@@ -105,4 +107,4 @@ Peer* Host::_GetPeer(_ENetPeer* enet_peer) {
   return _peers[enet_peer];
 }
 
-} // namespace enet
+}  // namespace enet

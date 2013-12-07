@@ -1,14 +1,16 @@
-#include <enet-plus/event.hpp>
+// Copyright (c) 2013 Andrey Konovalov
+
+#include "enet-plus/event.h"
 
 #include <string>
 #include <vector>
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/pstdint.h"
 
-#include <enet-plus/host.hpp>
-#include <enet-plus/peer.hpp>
+#include "enet-plus/host.h"
+#include "enet-plus/peer.h"
 
 namespace enet {
 
@@ -18,13 +20,13 @@ Event::~Event() {
 }
 
 Event::EventType Event::GetType() const {
-  if(_event->type == ENET_EVENT_TYPE_CONNECT) {
+  if (_event->type == ENET_EVENT_TYPE_CONNECT) {
     return Event::TYPE_CONNECT;
   }
-  if(_event->type == ENET_EVENT_TYPE_DISCONNECT) {
+  if (_event->type == ENET_EVENT_TYPE_DISCONNECT) {
     return Event::TYPE_DISCONNECT;
   }
-  if(_event->type == ENET_EVENT_TYPE_RECEIVE) {
+  if (_event->type == ENET_EVENT_TYPE_RECEIVE) {
     return Event::TYPE_RECEIVE;
   }
   return Event::TYPE_NONE;
@@ -56,10 +58,10 @@ Event::Event() : _is_packet_destroyed(true) {
 }
 
 void Event::_DestroyPacket() {
-  if(!_is_packet_destroyed && _event->type == ENET_EVENT_TYPE_RECEIVE) {
+  if (!_is_packet_destroyed && _event->type == ENET_EVENT_TYPE_RECEIVE) {
     enet_packet_destroy(_event->packet);
     _is_packet_destroyed = true;
   }
 }
 
-} // namespace enet
+}  // namespace enet

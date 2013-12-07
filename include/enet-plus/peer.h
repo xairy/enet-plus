@@ -1,12 +1,14 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #ifndef ENET_PLUS_PEER_HPP_
 #define ENET_PLUS_PEER_HPP_
 
 #include <string>
 
-#include <enet-plus/base/macros.hpp>
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/macros.hpp"
+#include "enet-plus/base/pstdint.hpp"
 
-#include <enet-plus/dll.hpp>
+#include "enet-plus/dll.hpp"
 
 struct _ENetPeer;
 
@@ -32,8 +34,7 @@ class Peer {
     const char* data,
     size_t length,
     bool reliable = true,
-    uint8_t channel_id = 0
-  );
+    uint8_t channel_id = 0);
 
   // Returns the ip of the remote peer.
   // An empty string will be returned in case of an error.
@@ -76,13 +77,13 @@ class Peer {
 
  private:
   // Creates a 'Peer' associated with the ENet peer 'peer'.
-  Peer(_ENetPeer* peer);
+  explicit Peer(_ENetPeer* peer);
 
   _ENetPeer* _peer;
 
   DISALLOW_COPY_AND_ASSIGN(Peer);
 };
 
-} // namespace enet
+}  // namespace enet
 
-#endif // ENET_PLUS_PEER_HPP_
+#endif  // ENET_PLUS_PEER_HPP_

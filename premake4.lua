@@ -65,7 +65,7 @@ solution "enet-plus"
     defines { "ENET_PLUS_DLL" }
     includedirs { "include" }
     files { "src/enet-plus/**.cpp",
-            "include/enet-plus/**.hpp" }
+            "include/enet-plus/**.h" }
 
     configuration "linux"
       links { "enet" }

@@ -1,16 +1,18 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #ifndef ENET_PLUS_ENET_HPP_
 #define ENET_PLUS_ENET_HPP_
 
 #include <enet-plus/base/macros.hpp>
 #include <enet-plus/base/pstdint.hpp>
 
-#include <enet-plus/host.hpp>
-#include <enet-plus/server_host.hpp>
-#include <enet-plus/client_host.hpp>
-#include <enet-plus/event.hpp>
-#include <enet-plus/peer.hpp>
+#include "enet-plus/host.h"
+#include "enet-plus/server_host.h"
+#include "enet-plus/client_host.h"
+#include "enet-plus/event.h"
+#include "enet-plus/peer.h"
 
-#include <enet-plus/dll.hpp>
+#include "enet-plus/dll.h"
 
 namespace enet {
 
@@ -40,8 +42,7 @@ class Enet {
     size_t peer_count = 32,
     size_t channel_count = 1,
     uint32_t incoming_bandwith = 0,
-    uint32_t outgoing_bandwith = 0
-  );
+    uint32_t outgoing_bandwith = 0);
 
   // Creates 'ClientHost'.
   // You may specify 'channel_count' - number of channels to be used.
@@ -53,8 +54,7 @@ class Enet {
   ENET_PLUS_DECL ClientHost* CreateClientHost(
     size_t channel_count = 1,
     uint32_t incoming_bandwith = 0,
-    uint32_t outgoing_bandwith = 0
-  );
+    uint32_t outgoing_bandwith = 0);
 
   // Creates an empty Event.
   // Returned 'Event' should be deallocated manually using 'delete'.
@@ -69,6 +69,6 @@ class Enet {
   DISALLOW_COPY_AND_ASSIGN(Enet);
 };
 
-} // namespace enet
+}  // namespace enet
 
-#endif // ENET_PLUS_ENET_HPP_
+#endif  // ENET_PLUS_ENET_HPP_

@@ -1,3 +1,5 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #ifndef ENET_PLUS_BASE_PSTDINT_HPP_
 #define ENET_PLUS_BASE_PSTDINT_HPP_
 
@@ -25,4 +27,4 @@ SCHECK(sizeof(float64_t) == 8);
 // Unicode character.
 typedef uint32_t uchar_t;
 
-#endif // ENET_PLUS_BASE_PSTDINT_HPP_
+#endif  // ENET_PLUS_BASE_PSTDINT_HPP_

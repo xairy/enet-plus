@@ -1,11 +1,13 @@
-#include <enet-plus/peer.hpp>
+// Copyright (c) 2013 Andrey Konovalov
+
+#include "enet-plus/peer.h"
 
 #include <string>
 
 #include <enet/enet.h>
 
-#include <enet-plus/base/macros.hpp>
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/macros.h"
+#include "enet-plus/base/pstdint.h"
 
 namespace enet {
 
@@ -16,34 +18,34 @@ bool Peer::Send(
   uint8_t channel_id
 ) {
   enet_uint32 flags = 0;
-  if(reliable) {
+  if (reliable) {
     flags = flags | ENET_PACKET_FLAG_RELIABLE;
   }
   ENetPacket* packet = enet_packet_create(data, length, flags);
-  if(packet == NULL) {
-    //THROW_ERROR("Unable to create enet packet!");
+  if (packet == NULL) {
+    // THROW_ERROR("Unable to create enet packet!");
     return false;
   }
-  if(enet_peer_send(_peer, channel_id, packet) != 0) {
+  if (enet_peer_send(_peer, channel_id, packet) != 0) {
     enet_packet_destroy(packet);
-    //THROW_ERROR("Unable to send enet packet!");
+    // THROW_ERROR("Unable to send enet packet!");
     return false;
   }
   return true;
 }
 
 std::string Peer::GetIp() const {
-  const size_t buffer_size = 32;
-  char buffer[buffer_size];
-  if(enet_address_get_host_ip(&_peer->address, buffer, buffer_size) != 0) {
-    //THROW_ERROR("Unable to get enet host ip!");
+  const size_t BUFFER_SIZE = 32;
+  char buffer[BUFFER_SIZE];
+  if (enet_address_get_host_ip(&_peer->address, buffer, buffer_size) != 0) {
+    // THROW_ERROR("Unable to get enet host ip!");
     buffer[0] = 0;
   }
   return std::string(buffer);
 }
 
 uint16_t Peer::GetPort() const {
-  return _peer->address.port; // XXX: type cast.
+  return _peer->address.port;  // XXX: type cast.
 }
 
 void Peer::Disconnect() {
@@ -74,4 +76,4 @@ Peer::Peer(ENetPeer* peer) : _peer(peer) {
   CHECK(peer != NULL);
 }
 
-} // namespace enet
+}  // namespace enet

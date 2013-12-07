@@ -1,13 +1,15 @@
+// Copyright (c) 2013 Andrey Konovalov
+
 #ifndef ENET_PLUS_HOST_HPP_
 #define ENET_PLUS_HOST_HPP_
 
 #include <map>
 #include <string>
 
-#include <enet-plus/base/macros.hpp>
-#include <enet-plus/base/pstdint.hpp>
+#include "enet-plus/base/macros.h"
+#include "enet-plus/base/pstdint.h"
 
-#include <enet-plus/dll.hpp>
+#include "enet-plus/dll.h"
 
 struct _ENetHost;
 struct _ENetPeer;
@@ -42,8 +44,7 @@ class Host {
     size_t peer_count,
     size_t channel_count,
     uint32_t incoming_bandwidth,
-    uint32_t outgoing_bandwidth
-  );
+    uint32_t outgoing_bandwidth);
 
   // Cleans up. Automatically called in the destructor.
   ENET_PLUS_DECL void Finalize();
@@ -83,6 +84,6 @@ class Host {
   DISALLOW_COPY_AND_ASSIGN(Host);
 };
 
-} // namespace enet
+}  // namespace enet
 
-#endif // ENET_PLUS_HOST_HPP_
+#endif  // ENET_PLUS_HOST_HPP_
